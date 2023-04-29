@@ -108,14 +108,14 @@
     <comp lib="0" loc="(550,80)" name="Tunnel">
       <a name="label" val="a"/>
     </comp>
-    <comp lib="1" loc="(640,270)" name="NOT Gate"/>
+    <comp lib="1" loc="(660,270)" name="NOT Gate"/>
     <comp lib="1" loc="(820,270)" name="NOT Gate"/>
     <comp lib="10" loc="(260,530)" name="Digital Oscilloscope">
       <a name="inputs" val="7"/>
       <a name="label" val="CLOCKS"/>
       <a name="nState" val="30"/>
     </comp>
-    <comp lib="4" loc="(660,240)" name="J-K Flip-Flop">
+    <comp lib="4" loc="(690,240)" name="J-K Flip-Flop">
       <a name="appearance" val="logisim_evolution"/>
     </comp>
     <comp lib="4" loc="(850,240)" name="J-K Flip-Flop">
@@ -171,15 +171,15 @@
     <wire from="(520,280)" to="(570,280)"/>
     <wire from="(570,280)" to="(570,290)"/>
     <wire from="(570,290)" to="(570,340)"/>
-    <wire from="(570,290)" to="(650,290)"/>
+    <wire from="(570,290)" to="(680,290)"/>
     <wire from="(570,340)" to="(780,340)"/>
-    <wire from="(590,190)" to="(590,270)"/>
-    <wire from="(590,190)" to="(910,190)"/>
-    <wire from="(590,270)" to="(610,270)"/>
-    <wire from="(640,270)" to="(650,270)"/>
-    <wire from="(650,200)" to="(650,250)"/>
-    <wire from="(650,200)" to="(970,200)"/>
-    <wire from="(710,250)" to="(760,250)"/>
+    <wire from="(600,250)" to="(600,270)"/>
+    <wire from="(600,250)" to="(680,250)"/>
+    <wire from="(600,270)" to="(600,370)"/>
+    <wire from="(600,270)" to="(630,270)"/>
+    <wire from="(600,370)" to="(920,370)"/>
+    <wire from="(660,270)" to="(680,270)"/>
+    <wire from="(740,250)" to="(760,250)"/>
     <wire from="(760,250)" to="(760,270)"/>
     <wire from="(760,250)" to="(830,250)"/>
     <wire from="(760,270)" to="(790,270)"/>
@@ -190,9 +190,7 @@
     <wire from="(830,210)" to="(830,250)"/>
     <wire from="(830,250)" to="(840,250)"/>
     <wire from="(900,250)" to="(1000,250)"/>
-    <wire from="(900,290)" to="(910,290)"/>
-    <wire from="(910,190)" to="(910,290)"/>
-    <wire from="(910,290)" to="(970,290)"/>
-    <wire from="(970,200)" to="(970,290)"/>
+    <wire from="(900,290)" to="(920,290)"/>
+    <wire from="(920,290)" to="(920,370)"/>
   </circuit>
 </project>
