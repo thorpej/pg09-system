@@ -410,6 +410,15 @@
     "subpart_first_id": 65,
     "subpart_id_separator": 0
   },
-  "sheets": [],
+  "sheets": [
+    [
+      "44572023-3621-4b3a-bd53-c3b2b3f42871",
+      ""
+    ],
+    [
+      "4db01e9b-9f77-42a7-9351-8914253ebfe9",
+      "Clock and Reset Generator"
+    ]
+  ],
   "text_variables": {}
 }
