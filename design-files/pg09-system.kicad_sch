@@ -95,6 +95,9 @@
     (path "/4db01e9b-9f77-42a7-9351-8914253ebfe9/5d2a2f99-bcb8-437b-9696-7545cf1ec0b4"
       (reference "C202") (unit 1) (value "0.1µF") (footprint "")
     )
+    (path "/4db01e9b-9f77-42a7-9351-8914253ebfe9/3b1941af-631e-493a-a91a-d18d5a378ced"
+      (reference "C203") (unit 1) (value "0.1µF") (footprint "")
+    )
     (path "/4db01e9b-9f77-42a7-9351-8914253ebfe9/643c9d4d-47a4-4731-83f1-882b326f1725"
       (reference "J201") (unit 1) (value "Clock Source") (footprint "Connector_PinHeader_2.54mm:PinHeader_2x03_P2.54mm_Vertical")
     )
@@ -112,6 +115,12 @@
     )
     (path "/4db01e9b-9f77-42a7-9351-8914253ebfe9/961278d3-450f-4620-a8e0-bd6c53687e03"
       (reference "R203") (unit 1) (value "3K3") (footprint "")
+    )
+    (path "/4db01e9b-9f77-42a7-9351-8914253ebfe9/a4ad68a0-5dcf-48ba-8312-dece240b29dd"
+      (reference "R204") (unit 1) (value "100") (footprint "")
+    )
+    (path "/4db01e9b-9f77-42a7-9351-8914253ebfe9/fb80f510-ad52-498c-af60-7ee0a3bd1460"
+      (reference "R205") (unit 1) (value "100") (footprint "")
     )
     (path "/4db01e9b-9f77-42a7-9351-8914253ebfe9/3e629864-12b8-40ac-b2ad-9e4bf17f0460"
       (reference "SW201") (unit 1) (value "SW_Push") (footprint "")
