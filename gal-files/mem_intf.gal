@@ -1,0 +1,59 @@
+GAL22V10
+MEMINTF
+
+E   RW  BA BS     A1   A2     A3      FLASHWREN NC NC NC GND
+NC /RD /WR HALTED IRQF FIRQF /FLASHWR NC        NC NC NC VCC
+
+;
+; Generate the /RD and /WR strobes.
+;
+RD = E * RW
+WR = E * /RW
+
+;
+; Generate a flash-specific /WR strobe if flash writes are enabled.
+;
+FLASHWR = E * /RW * FLASHWREN
+
+;
+; 6809 states encoded bus Bus Available and Bus Status:
+;
+; BA     BS     State
+; -------------------
+;  0      0     Normal (running)
+;  0      1     Interrupt or Reset Acknowledge (vector fetch)
+;  1      0     Sync Acknowledge
+;  1      1     Halt Acknowledge
+;
+
+;
+; Indicate if the 6809 is halted.
+;
+HALTED = BA * BS
+
+;
+; 6809 vector locations:
+;
+; $FFFE - $FFFF     Reset
+; $FFFC - $FFFD     NMI
+; $FFFA - $FFFB     SWI
+; $FFF8 - $FFF9     IRQ
+; $FFF6 - $FFF7     FIRQ
+; $FFF4 - $FFF5     SWI2
+; $FFF2 - $FFF3     SWI3
+; $FFF0 - $FFF1     Reserved
+;
+
+;
+; If a vector fetch is occuring, decode which one is being fetched
+; based on A1-A3.  We mainly care about IRQ and FIRQ; detecting those
+; would be necessary if we wish support auto-vectoring in the interrupt
+; controller.
+;
+FIRQF = /BA * BS * /A3 *  A2 *  A1
+IRQF  = /BA * BS *  A3 * /A2 * /A1
+
+DESCRIPTION
+
+This decodes bus state signals and generates other signals for the
+memory interface on the 6809 Playground computer.
