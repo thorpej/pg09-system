@@ -1,0 +1,38 @@
+GAL22V10
+ADDRDEC0
+
+A5  A6   A7   A8   A9   A10  A11  A12  A13  A14   A15  GND
+NC /IO0 /IO1 /IO2 /IO3 /IO4 /IO5 /IO6 /IO7 /BROM /FROM VCC
+
+
+;
+; Decodes Bank #0 (0-7) of the 32 32-byte I/O device selects.
+;
+;        |----------- I/O region --------|     | Bnk |     | - Device -|
+;        1      0      0     1     1     1     0     0     x     x     x
+IO0  = A15 * /A14 * /A13 * A12 * A11 * A10 * /A9 * /A8 * /A7 * /A6 * /A5
+IO1  = A15 * /A14 * /A13 * A12 * A11 * A10 * /A9 * /A8 * /A7 * /A6 *  A5
+IO2  = A15 * /A14 * /A13 * A12 * A11 * A10 * /A9 * /A8 * /A7 *  A6 * /A5
+IO3  = A15 * /A14 * /A13 * A12 * A11 * A10 * /A9 * /A8 * /A7 *  A6 *  A5
+IO4  = A15 * /A14 * /A13 * A12 * A11 * A10 * /A9 * /A8 *  A7 * /A6 * /A5
+IO5  = A15 * /A14 * /A13 * A12 * A11 * A10 * /A9 * /A8 *  A7 * /A6 *  A5
+IO6  = A15 * /A14 * /A13 * A12 * A11 * A10 * /A9 * /A8 *  A7 *  A6 * /A5
+IO7  = A15 * /A14 * /A13 * A12 * A11 * A10 * /A9 * /A8 *  A7 *  A6 *  A5
+
+;
+; Decodes banked ROM.
+;
+;        |--Banked ROM-|
+;        1      1      0     x     x     x
+BROM = A15 *  A14 * /A13
+
+;
+; Decodes fixed ROM.
+;
+;        |--Fixed ROM--|
+;        1      1      1     x     x     x
+FROM = A15 *  A14 *  A13
+
+DESCRIPTION
+
+This is part (#0) of the address decoder for the 6809 Playground computer.
