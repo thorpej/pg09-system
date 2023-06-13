@@ -249,6 +249,7 @@ set_address(uint16_t address)
 
   for (i = 0; out_pins[i] != -1; i++) {
     digitalWrite(out_pins[i], address & 1);
+    address >>= 1;
   }
 }
 
