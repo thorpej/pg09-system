@@ -45,10 +45,13 @@
 #define OUT_A15    A15
 #define ADDR_SHIFT 5
 
-const int out_pins[] = {
+const int addr_pins[] = {
   OUT_A5, OUT_A6, OUT_A7, OUT_A8, OUT_A9, OUT_A10,
   OUT_A11, OUT_A12, OUT_A13, OUT_A14, OUT_A15, -1,
 };
+
+/* All output pins are addr pins. */
+const int *out_pins = addr_pins;
 
 /* Pins used for select inputs. */
 #define IN_IO0    22
@@ -90,12 +93,6 @@ const int out_pins[] = {
 #define IN_IO29   19
 #define IN_IO30   20
 #define IN_IO31   21
-
-struct addr_decode_entry {
-  uint16_t    start;
-  uint16_t    end;
-  int         chip_select;
-};
 
 struct signal_desc {
   const char *name;
@@ -152,6 +149,12 @@ const struct signal_desc signal_map[] = {
 [FROMSEL]   = { .name = "/FROM",  .pin = IN_FROM },
 };
 #define signal_map_count (sizeof(signal_map) / sizeof(signal_map[0]))
+
+struct addr_decode_entry {
+  uint16_t    start;
+  uint16_t    end;
+  int         chip_select;
+};
 
 struct addr_decode_entry addr_decode_tab[] = {
   { .start = 0x0000,           .end = 0x7fff,           .chip_select = LBRAMSEL },
@@ -253,29 +256,50 @@ set_address(uint16_t address)
   }
 }
 
+int error_count;
+
 bool
-check_selects(int expected)
+check_output(int sig, bool expected)
 {
   int i;
   bool asserted;
   bool error = false;
 
+  const struct signal_desc *s = &signal_map[sig];
+  asserted = signal_is_active(s);
+ 
+  if (expected != asserted) {
+    if (!asserted) {
+      tla_printf("  !!! %s -- NOT ASSERTED AS EXPECTED\n", s->name);
+        error = true;
+    }
+  } else {
+    if (asserted) {
+      tla_printf("   !!! %s -- ASSERTED WHEN NOT EXPECTED\n", s->name);
+      error = true;
+    }
+  }
+  if (error) {
+    error_count++;
+  }
+  return error;
+}
+
+bool
+check_all_selects(int cs_expected)
+{
+  int i;
+  bool error = false;
+
   for (i = 0; i < signal_map_count; i++) {
     const struct signal_desc *s = &signal_map[i];
-    asserted = signal_is_active(s);
 
-    if (i == expected && expected != -1) {
-      if (!asserted) {
-        tla_printf("  !!! %s -- NOT ASSERTED AS EXPECTED\n", s->name);
-        error = true;
-      }
-    } else {
-      if (asserted) {
-        tla_printf("   !!! %s -- ASSERTED WHEN NOT EXPECTED\n", s->name);
+    if (s->pin != -1) {
+      if (check_output(i, i == cs_expected)) {
         error = true;
       }
     }
-  }
+  }  
   return error;
 }
 
@@ -323,8 +347,8 @@ setup()
 void
 loop()
 {
-  int i, error_count;
   uint32_t address, addresses_tested;
+  int i;
 
   tla_printf("6809 Playground address decoder tester.\n");
   tla_printf("Press <RETURN> to perform the test...\n");
@@ -344,9 +368,8 @@ loop()
          address <= addr_decode_tab[i].end;
          address += (1 << ADDR_SHIFT)) {
       set_address((uint16_t)address);
-      if (check_selects(addr_decode_tab[i].chip_select)) {
+      if (check_all_selects(addr_decode_tab[i].chip_select)) {
         /* Break out of this section if an error occurs. */
-        error_count++;
         break;
       }
       addresses_tested++;
