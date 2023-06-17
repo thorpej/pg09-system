@@ -1,0 +1,108 @@
+GAL22V10
+INTMUX
+
+PHI2 L0   L1 L2 LA U0 U1 U2 UA /CS0 /CS1 GND
+RWB  NC   IP D7 D6 D5 D4 D3 D2  D1   D0  VCC
+
+;
+; This is the second stage of a 16-IRQ priority-ecoding interrupt controller
+; with individual interrupt enables.  This second stage glues the two first
+; stages together to generate an IRQ number from 0-15 (shifted left one
+; bit) and assert an interrupt output for the highest-priority pending
+; interrupt, or generate a value of -2 to indicate that no interrupt is
+; pending.  By shifting the values left by one bit (i.e multiplying by 2),
+; the value can be used directly as an offset into a table of interrupt
+; handlers, where each entry in the table is 2 bytes.
+;
+; It is essentially a mux with a special output case if neither of the
+; two inputs is active.  The IP (Interrupt Pending) output is active-high
+; with the intention that it drives the gate of an external small-signal
+; MOSFET to pull /IRQ down.
+;
+; It is designed to be paired with a 65C21 PIA to act as the interrupt
+; enable registers (PA lower and PB upper).  The 65C21 has 1 active-low
+; chip select and 2 active-high chip selects.  This mux has 2 active-low
+; chip selects, which enables the following configuration:
+;
+; 65C21
+;  A0 -> RS0
+;  A1 -> RS1
+;  A2 -> CS0
+;  A2 -> CS1
+; /CS -> CS2B
+;
+; INTMUX
+; /CS -> /CS1
+;  A2 -> /CS2
+;
+; So, pending-interrupt register would appear at offsets 0, 1, 2, and
+; 3, and the PIA (and thus the interrupt control registers) starting at
+; offset 4.
+;
+; Function table:
+;
+; LA L2 L1 L0 UA U2 U1 U0   D7 D6 D5 D4 D3 D2 D1 D0 IP
+;  L  x  x  x  L  x  x  x    H  H  H  H  H  H  H  L  L
+;  H  L  L  L  L  x  x  x    L  L  L  L  L  L  L  L  H
+;  H  L  L  H  L  x  x  x    L  L  L  L  L  L  H  L  H
+;  H  L  H  L  L  x  x  x    L  L  L  L  L  H  L  L  H
+;  H  L  H  H  L  x  x  x    L  L  L  L  L  H  H  L  H
+;  H  H  L  L  L  x  x  x    L  L  L  L  H  L  L  L  H
+;  H  H  L  H  L  x  x  x    L  L  L  L  H  L  H  L  H
+;  H  H  H  L  L  x  x  x    L  L  L  L  H  H  L  L  H
+;  H  H  H  H  L  x  x  x    L  L  L  L  H  H  H  L  H
+;  x  x  x  x  H  L  L  L    L  L  L  H  L  L  L  L  H
+;  x  x  x  x  H  L  L  H    L  L  L  H  L  L  H  L  H
+;  x  x  x  x  H  L  H  L    L  L  L  H  L  H  L  L  H
+;  x  x  x  x  H  L  H  H    L  L  L  H  L  H  H  L  H
+;  x  x  x  x  H  H  L  L    L  L  L  H  H  L  L  L  H
+;  x  x  x  x  H  H  L  H    L  L  L  H  H  L  H  L  H
+;  x  x  x  x  H  H  H  L    L  L  L  H  H  H  L  L  H
+;  x  x  x  x  H  H  H  H    L  L  L  H  H  H  H  L  H
+;
+; The table makes it look a lot more complicated than it is.  What it
+; really boils down to is: For each shifted output digit, select the
+; Ln value if UA is low and the Un value if UA is high.  And when both
+; UA and LA are low, 0xfe (-2) is placed into the output.
+;
+; We avoid using feedback from the OLMCs and use registered outputs
+; to keep things stable when the CPU is reading the mux.
+;
+; The function table doesn't list the output enables, but for all of
+; the Dn outputs, /CS0, /CS1, and RWB must all be asserted.  IP's output
+; is always enabled.
+;
+
+IP.R  = LA + UA
+
+/D7.R = LA + UA
+
+/D6.R = LA + UA
+
+/D5.R = LA + UA
+
+D4.R  = UA
+
+D3.R  = LA * L2 * /UA
+      + UA * U2
+
+D2.R  = LA * L1 * /UA
+      + UA * U1
+
+D1.R  = LA * L0 * /UA
+      + UA * U0
+
+D0.T  = GND		; no need to register an unchanging output.
+
+D7.E = CS0 * CS1 * RWB
+D6.E = CS0 * CS1 * RWB
+D5.E = CS0 * CS1 * RWB
+D4.E = CS0 * CS1 * RWB
+D3.E = CS0 * CS1 * RWB
+D2.E = CS0 * CS1 * RWB
+D1.E = CS0 * CS1 * RWB
+D0.E = CS0 * CS1 * RWB
+
+DESCRIPTION
+
+This is an interrupt mux for the 6809 Playground computer.
