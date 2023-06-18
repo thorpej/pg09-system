@@ -57,6 +57,7 @@ const int out_pins[] = {
 #define IN_IRQF     25
 #define IN_FIRQF    26
 #define IN_FLASHWR  27
+#define IN_RWO      28
 
 struct signal_desc {
   const char *name;
@@ -69,6 +70,7 @@ struct signal_desc {
 #define IRQF      3
 #define FIRQF     4
 #define FLASHWR   5
+#define RWO       6
 
 const struct signal_desc signal_map[] = {
 [RD]      = { .name = "/RD",      .pin = IN_RD },
@@ -77,6 +79,7 @@ const struct signal_desc signal_map[] = {
 [IRQF]    = { .name = "IRQF",     .pin = IN_IRQF },
 [FIRQF]   = { .name = "FIRQF",    .pin = IN_FIRQF },
 [FLASHWR] = { .name = "/FLASHWR", .pin = IN_FLASHWR },
+[RWO]     = { .name = "RWO",      .pin = IN_RWO },
 };
 #define signal_map_count (sizeof(signal_map) / sizeof(signal_map[0]))
 
@@ -221,6 +224,7 @@ loop()
     check_output(RD, rd);
     check_output(WR, wr);
     check_output(FLASHWR, flashwr);
+    check_output(RWO, rw);
   }
 
   /*
