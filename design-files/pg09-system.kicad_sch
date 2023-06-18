@@ -31,6 +31,23 @@
     )
   )
 
+  (sheet (at 59.69 16.51) (size 43.18 15.24) (fields_autoplaced)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0000))
+    (uuid c1ac9c41-410b-461b-8887-70fb93569524)
+    (property "Sheetname" "Address Decoder" (at 59.69 15.7984 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "pg09-system-addr-decode.kicad_sch" (at 59.69 32.3346 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "pg09-system"
+        (path "/44572023-3621-4b3a-bd53-c3b2b3f42871" (page "3"))
+      )
+    )
+  )
+
   (sheet_instances
     (path "/" (page "1"))
   )

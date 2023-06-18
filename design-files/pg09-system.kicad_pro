@@ -434,6 +434,10 @@
     [
       "4db01e9b-9f77-42a7-9351-8914253ebfe9",
       "Clock and Reset Generator"
+    ],
+    [
+      "c1ac9c41-410b-461b-8887-70fb93569524",
+      "Address Decoder"
     ]
   ],
   "text_variables": {}
