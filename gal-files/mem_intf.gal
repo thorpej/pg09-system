@@ -2,13 +2,18 @@ GAL22V10
 MEMINTF
 
 E   RW  BA BS     A1   A2     A3      FLASHWREN NC NC NC GND
-NC /RD /WR HALTED IRQF FIRQF /FLASHWR NC        NC NC NC VCC
+NC /RD /WR HALTED IRQF FIRQF /FLASHWR RWO       NC NC NC VCC
 
 ;
 ; Generate the /RD and /WR strobes.
 ;
 RD = E * RW
 WR = E * /RW
+
+;
+; Buffer the R/W signal from the CPU here.
+;
+RWO = RW
 
 ;
 ; Generate a flash-specific /WR strobe if flash writes are enabled.
