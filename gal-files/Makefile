@@ -1,7 +1,7 @@
 #GALASM= 	galasm
 GALASM= 	galette
 
-#GALASM_FLAGS= 	-c -f -p
+GALASM_FLAGS= 	-f -p
 
 JEDECS= 	addr_decode0.jed addr_decode1.jed \
 		addr_decode2.jed addr_decode3.jed \
