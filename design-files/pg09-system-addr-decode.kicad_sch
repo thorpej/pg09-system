@@ -477,8 +477,8 @@
     (uuid ff203d19-3637-4c4a-b9ea-ccbdd5fa9cf6)
   )
 
-  (text_box "addr_decode2 (U303) and addr_decode3 (U304)\nare optional, and only required to support\nI/O device selects 16-31."
-    (at 199.39 82.55 0) (size 49.53 7.62)
+  (text_box "Memory map:\n$0000 - $7FFF Low banked RAM (32K)\n$8000 - $9BFF Fixed RAM (7K)\n$9C00 - $9FFF I/O space (1K)\n$A000 - $BFFF High banked RAM (8K)\n$C000 - $DFFF Banked ROM (8K)\n$E000 - $FFFF Fixed ROM (8K)\n\nA15 is used directly as chip select for low\nbanked RAM.\n\naddr_decode2 (U303) and addr_decode3 (U304)\nare optional, and only required to support\nI/O device selects 16-31."
+    (at 199.39 67.31 0) (size 49.53 30.48)
     (stroke (width 0) (type default))
     (fill (type none))
     (effects (font (size 1.27 1.27)) (justify left top))
