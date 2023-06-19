@@ -1,0 +1,25 @@
+SYSTEM REGISTERS: IO0SEL
+
+ROM banker	(4)
+	BROM bank + extra I/O port
+RAM banker	(4)
+	LBRAM bank + HBRAM bank
+Int enables	(4)
+	0-7 + 8-15
+Int pending	(1)
+
+Offset		A4	A3	A2	A1	A0
+$00		0	0	0	0	0	ROM banker
+$04		0	0	1	0	0	RAM banker
+$08		0	1	0	0	0	Int enables
+$0c		0	1	1	0	0	Int pending
+
+
+UARTs: IO1SEL
+
+ACIA		(4)
+16550		(8)
+
+Offset		A4	A3	A2	A1	A0
+$00		0	0	0	0	0	ACIA
+$08		0	1	0	0	0	16550
