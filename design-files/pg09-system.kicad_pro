@@ -438,6 +438,10 @@
     [
       "c1ac9c41-410b-461b-8887-70fb93569524",
       "Address Decoder"
+    ],
+    [
+      "7138fc46-10d4-4cc4-afd5-54717dbe5db7",
+      "Interrupt controller"
     ]
   ],
   "text_variables": {}
