@@ -1,8 +1,8 @@
 GAL22V10
 MEMINTF
 
-E   RW  BA BS     A1   A2     A3      FLASHWREN NC NC NC GND
-NC /RD /WR HALTED IRQF FIRQF /FLASHWR RWO       NC NC NC VCC
+E   RW  BA BS     A1   A2     A3      A4  FLASHWREN  NC  NC  GND
+NC /RD /WR HALTED IRQF FIRQF /FLASHWR RWO nA4        nA3 nA2 VCC
 
 ;
 ; Generate the /RD and /WR strobes.
@@ -19,6 +19,18 @@ RWO = RW
 ; Generate a flash-specific /WR strobe if flash writes are enabled.
 ;
 FLASHWR = E * /RW * FLASHWREN
+
+;
+; A lot of chips have active-low and active-high chip-selects to faciliate
+; additional address decoding options.  Examples are the 65C21, 65C22,
+; 65C51, and 16550.  So we provide inverted copies of A2, A3, and A4 for
+; clusters of chips that want to share the same IOxSEL, and use another
+; address line for their secondary chip-selects.  This saves us from having
+; to plop random inverters all over the place.
+;
+nA2 = /A2
+nA3 = /A3
+nA4 = /A4
 
 ;
 ; 6809 states encoded bus Bus Available and Bus Status:
