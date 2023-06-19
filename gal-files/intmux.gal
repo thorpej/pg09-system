@@ -1,8 +1,8 @@
 GAL22V10
 INTMUX
 
-PHI2 L2   L1 L0 LA U2 U1 U0 UA /CS0 /CS1 GND
-RWB  NC   IP D7 D6 D5 D4 D3 D2  D1   D0  VCC
+PHI2 L2   L1 L0 LA U2 U1 U0 UA CS0 CS1 GND
+/CS2 RWB  IP D7 D6 D5 D4 D3 D2 D1  D0  VCC
 
 ;
 ; This is the second stage of a 16-IRQ priority-ecoding interrupt controller
@@ -20,24 +20,7 @@ RWB  NC   IP D7 D6 D5 D4 D3 D2  D1   D0  VCC
 ; MOSFET to pull /IRQ down.
 ;
 ; It is designed to be paired with a 65C21 PIA to act as the interrupt
-; enable registers (PA lower and PB upper).  The 65C21 has 1 active-low
-; chip select and 2 active-high chip selects.  This mux has 2 active-low
-; chip selects, which enables the following configuration:
-;
-; 65C21
-;  A0 -> RS0
-;  A1 -> RS1
-;  A2 -> CS0
-;  A2 -> CS1
-; /CS -> CS2B
-;
-; INTMUX
-; /CS -> /CS1
-;  A2 -> /CS2
-;
-; So, pending-interrupt register would appear at offsets 0, 1, 2, and
-; 3, and the PIA (and thus the interrupt control registers) starting at
-; offset 4.
+; enable registers (PA lower and PB upper).
 ;
 ; Function table:
 ;
@@ -94,14 +77,14 @@ D1.R  = LA * L0 * /UA
 
 D0.T  = GND		; no need to register an unchanging output.
 
-D7.E = CS0 * CS1 * RWB
-D6.E = CS0 * CS1 * RWB
-D5.E = CS0 * CS1 * RWB
-D4.E = CS0 * CS1 * RWB
-D3.E = CS0 * CS1 * RWB
-D2.E = CS0 * CS1 * RWB
-D1.E = CS0 * CS1 * RWB
-D0.E = CS0 * CS1 * RWB
+D7.E = CS0 * CS1 * CS2 * RWB
+D6.E = CS0 * CS1 * CS2 * RWB
+D5.E = CS0 * CS1 * CS2 * RWB
+D4.E = CS0 * CS1 * CS2 * RWB
+D3.E = CS0 * CS1 * CS2 * RWB
+D2.E = CS0 * CS1 * CS2 * RWB
+D1.E = CS0 * CS1 * CS2 * RWB
+D0.E = CS0 * CS1 * CS2 * RWB
 
 DESCRIPTION
 
