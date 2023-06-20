@@ -270,12 +270,12 @@ check_output(int sig, bool expected)
  
   if (expected != asserted) {
     if (!asserted) {
-      tla_printf("  !!! %s -- NOT ASSERTED AS EXPECTED\n", s->name);
+      tla_printf("  !!! %s -- NOT ASSERTED AS EXPECTED\r\n", s->name);
         error = true;
     }
   } else {
     if (asserted) {
-      tla_printf("   !!! %s -- ASSERTED WHEN NOT EXPECTED\n", s->name);
+      tla_printf("   !!! %s -- ASSERTED WHEN NOT EXPECTED\r\n", s->name);
       error = true;
     }
   }
@@ -335,7 +335,7 @@ setup()
       if (addr_decode_tab[j].end >= addr_decode_tab[i].start &&
           addr_decode_tab[j].end <= addr_decode_tab[i].end) {
  bad_decode_table:
-        tla_printf("FATAL -- table entry %d overlaps with table entry %d.\n", i, j);
+        tla_printf("FATAL -- table entry %d overlaps with table entry %d.\r\n", i, j);
         for (;;) {
           /* Nothing */
         }
@@ -350,17 +350,17 @@ loop()
   uint32_t address, addresses_tested;
   int i;
 
-  tla_printf("6809 Playground address decoder tester.\n");
-  tla_printf("Press <RETURN> to perform the test...\n");
+  tla_printf("6809 Playground address decoder tester.\r\n");
+  tla_printf("Press <RETURN> to perform the test...\r\n");
   do {
     i = Serial.read();
-  } while (i != '\r' && i != '\n');
+  } while (i != '\r' && i != '\r\n');
 
   addresses_tested = 0;
   error_count = 0;
 
   for (i = 0; addr_decode_tab[i].start != addr_decode_tab[i].end; i++) {
-    tla_printf("Testing $%04X - $%04X -- %s\n",
+    tla_printf("Testing $%04X - $%04X -- %s\r\n",
                addr_decode_tab[i].start,
                addr_decode_tab[i].end,
                signal_map[addr_decode_tab[i].chip_select].name);
@@ -376,12 +376,12 @@ loop()
     }
   }
   if (error_count != 0) {
-    tla_printf("%d ERRORS DETECTED!\n", error_count);
+    tla_printf("%d ERRORS DETECTED!\r\n", error_count);
   } else if ((addresses_tested >> ADDR_SHIFT) != (65536 >> ADDR_SHIFT)) {
-    tla_printf("ONLY %u OUT OF %u ADDRESSES TESTED!\n",
+    tla_printf("ONLY %u OUT OF %u ADDRESSES TESTED!\r\n",
                addresses_tested >> ADDR_SHIFT,
                65536 >> ADDR_SHIFT);
   } else {
-    tla_printf("Passed!\n");
+    tla_printf("Passed!\r\n");
   }
 }

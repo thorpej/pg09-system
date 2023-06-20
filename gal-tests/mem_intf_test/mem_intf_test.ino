@@ -156,12 +156,12 @@ check_output(int sig, bool expected)
  
   if (expected != asserted) {
     if (!asserted) {
-      tla_printf("  !!! %s -- NOT ASSERTED AS EXPECTED\n", s->name);
+      tla_printf("  !!! %s -- NOT ASSERTED AS EXPECTED\r\n", s->name);
         error = true;
     }
   } else {
     if (asserted) {
-      tla_printf("   !!! %s -- ASSERTED WHEN NOT EXPECTED\n", s->name);
+      tla_printf("   !!! %s -- ASSERTED WHEN NOT EXPECTED\r\n", s->name);
       error = true;
     }
   }
@@ -195,11 +195,11 @@ loop()
 {
   int i;
 
-  tla_printf("6809 Playground MEMINTF signal tester.\n");
-  tla_printf("Press <RETURN> to perform the test...\n");
+  tla_printf("6809 Playground MEMINTF signal tester.\r\n");
+  tla_printf("Press <RETURN> to perform the test...\r\n");
   do {
     i = Serial.read();
-  } while (i != '\r' && i != '\n');
+  } while (i != '\r' && i != '\r\n');
 
   error_count = 0;
 
@@ -236,7 +236,7 @@ loop()
     bool bs = !!(i & 2);
     bool halted = ba && bs;
 
-    tla_printf("BA=%d BS=%d -> HALTED=%s\n", ba, bs, tf(halted));
+    tla_printf("BA=%d BS=%d -> HALTED=%s\r\n", ba, bs, tf(halted));
     digitalWrite(OUT_BA, ba);
     digitalWrite(OUT_BS, bs);
     check_output(HALTED, halted);
@@ -258,19 +258,19 @@ loop()
       bool irq_fetch  = intr_ack && (address == 0xFFF8 || address == 0xFFF9);
       set_address(address);
 
-      tla_printf("BA=%d BS=%d addr=$%04X -> IRQF=%s\n",
+      tla_printf("BA=%d BS=%d addr=$%04X -> IRQF=%s\r\n",
                  ba, bs, address, tf(irq_fetch));
       check_output(IRQF, irq_fetch);
 
-      tla_printf("BA=%d BS=%d addr=$%04X -> FIRQF=%s\n",
+      tla_printf("BA=%d BS=%d addr=$%04X -> FIRQF=%s\r\n",
                  ba, bs, address, tf(firq_fetch));
       check_output(FIRQF, firq_fetch);
     }
   }
 
   if (error_count != 0) {
-    tla_printf("%d ERRORS DETECTED!\n", error_count);
+    tla_printf("%d ERRORS DETECTED!\r\n", error_count);
   } else {
-    tla_printf("Passed!\n");
+    tla_printf("Passed!\r\n");
   }
 }
