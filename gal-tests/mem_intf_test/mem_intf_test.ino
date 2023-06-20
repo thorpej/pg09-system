@@ -156,7 +156,7 @@ check_output(int sig, bool expected)
  
   if (expected != asserted) {
     if (!asserted) {
-      tla_printf("  !!! %s -- NOT ASSERTED AS EXPECTED\r\n", s->name);
+      tla_printf("   !!! %s -- NOT ASSERTED AS EXPECTED\r\n", s->name);
         error = true;
     }
   } else {
@@ -215,7 +215,7 @@ loop()
     bool wr = e && !rw;
     bool flashwr = e && !rw && flashwren;
 
-    tla_printf("E=%d R/W=%d FLASHWREN=%d -> /RD=%s /WR=%s /FLASHWR=%s",
+    tla_printf("E=%d R/W=%d FLASHWREN=%d -> /RD=%s /WR=%s /FLASHWR=%s\r\n",
                e, rw, flashwren,
                tf(rd), tf(wr), tf(flashwr));
     digitalWrite(OUT_E, e);
