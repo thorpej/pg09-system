@@ -442,6 +442,10 @@
     [
       "7138fc46-10d4-4cc4-afd5-54717dbe5db7",
       "Interrupt controller"
+    ],
+    [
+      "29ccfefd-4ecb-4886-be07-d9fca15abc34",
+      "ROM"
     ]
   ],
   "text_variables": {}
