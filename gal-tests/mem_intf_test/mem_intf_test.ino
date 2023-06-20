@@ -39,15 +39,16 @@
 #define OUT_A1        A1
 #define OUT_A2        A2
 #define OUT_A3        A3
+#define OUT_A4        A4
 #define ADDR_SHIFT    1
 
 const int addr_pins[] = {
-  OUT_A1, OUT_A2, OUT_A3, -1,
+  OUT_A1, OUT_A2, OUT_A3, OUT_A4, -1,
 };
 
 const int out_pins[] = {
   OUT_E, OUT_RW, OUT_BA, OUT_BS, OUT_FLASHWREN,
-  OUT_A1, OUT_A2, OUT_A3, -1,
+  OUT_A1, OUT_A2, OUT_A3, OUT_A4, -1,
 };
 
 /* Pins used for inputs. */
@@ -58,6 +59,9 @@ const int out_pins[] = {
 #define IN_FIRQF    26
 #define IN_FLASHWR  27
 #define IN_RWO      28
+#define IN_nA2      29
+#define IN_nA3      30
+#define IN_nA4      31
 
 struct signal_desc {
   const char *name;
@@ -71,6 +75,9 @@ struct signal_desc {
 #define FIRQF     4
 #define FLASHWR   5
 #define RWO       6
+#define nA2       7
+#define nA3       8
+#define nA4       9
 
 const struct signal_desc signal_map[] = {
 [RD]      = { .name = "/RD",      .pin = IN_RD },
@@ -80,6 +87,9 @@ const struct signal_desc signal_map[] = {
 [FIRQF]   = { .name = "FIRQF",    .pin = IN_FIRQF },
 [FLASHWR] = { .name = "/FLASHWR", .pin = IN_FLASHWR },
 [RWO]     = { .name = "RWO",      .pin = IN_RWO },
+[nA2]     = { .name = "nA2",      .pin = IN_nA2 },
+[nA3]     = { .name = "nA3",      .pin = IN_nA3 },
+[nA4]     = { .name = "nA4",      .pin = IN_nA4 },
 };
 #define signal_map_count (sizeof(signal_map) / sizeof(signal_map[0]))
 
@@ -266,6 +276,27 @@ loop()
                  ba, bs, address, tf(firq_fetch));
       check_output(FIRQF, firq_fetch);
     }
+  }
+
+  /*
+   * Check the nAx signals.
+   */
+  for (uint16_t address = 0; address < 32; address++) {
+    bool na2 = !(address & (1U << 2));
+    bool a2 = !na2;
+    bool na3 = !(address & (1U << 2));
+    bool a3 = !na3;
+    bool na4 = !(address & (1U << 2));
+    bool a4 = !na4;
+
+    set_address(address);
+
+    tla_printf("A2=%s -> nA2=%s\r\n", tf(a2), tf(na2));
+    check_output(nA2, na2);
+    tla_printf("A3=%s -> nA3=%s\r\n", tf(a3), tf(na3));
+    check_output(nA3, na3);
+    tla_printf("A4=%s -> nA4=%s\r\n", tf(a4), tf(na4));
+    check_output(nA4, na4);
   }
 
   if (error_count != 0) {
