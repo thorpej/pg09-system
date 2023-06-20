@@ -446,6 +446,10 @@
     [
       "29ccfefd-4ecb-4886-be07-d9fca15abc34",
       "ROM"
+    ],
+    [
+      "c22548cb-3a32-4ecf-b2c4-e43fd96dc369",
+      "RAM"
     ]
   ],
   "text_variables": {}
