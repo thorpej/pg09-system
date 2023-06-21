@@ -450,6 +450,10 @@
     [
       "c22548cb-3a32-4ecf-b2c4-e43fd96dc369",
       "RAM"
+    ],
+    [
+      "ac00d1d6-4857-42f9-90e1-ab396f3828b3",
+      "UARTs"
     ]
   ],
   "text_variables": {}
