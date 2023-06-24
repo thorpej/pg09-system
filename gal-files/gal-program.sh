@@ -142,6 +142,6 @@ if test x"$1" != x; then
 	usage
 fi
 
-eval "action_$action"
+action_$action
 
 exit 0
