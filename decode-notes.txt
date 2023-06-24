@@ -1,3 +1,6 @@
+IRQ assignments (super preliminary):
+IRQ7 - data UART
+
 SYSTEM REGISTERS: IO0SEL
 
 ROM banker	(4)
