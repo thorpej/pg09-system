@@ -100,6 +100,9 @@ action_program()
 	# do the device is unreliable!
 	#
 	$minipro -p "$galtype" -P -w $"jedfile"
+
+	# Now explicitly verify the device programmed correctly.
+	$minipro -p "$galtype" -m "$jedfile"
 }
 
 action_verify()
