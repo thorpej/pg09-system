@@ -1,8 +1,8 @@
 GAL22V10
 MEMINTF
 
-E   RW  BA BS     A1   A2     A3      A4  FLASHWREN  NC  NC  GND
-NC /RD /WR HALTED IRQF FIRQF /FLASHWR RWO nA4        nA3 nA2 VCC
+E   RW  BA  BS      A1  A2  A3  A4  FLASHWREN NC NC  GND
+NC /RD /WR /FLASHWR nA4 nA3 nA2 NC  HALTED    NC RWO VCC
 
 ;
 ; Generate the /RD and /WR strobes.
@@ -67,8 +67,8 @@ HALTED = BA * BS
 ; would be necessary if we wish support auto-vectoring in the interrupt
 ; controller.
 ;
-FIRQF = /BA * BS * /A3 *  A2 *  A1
-IRQF  = /BA * BS *  A3 * /A2 * /A1
+;FIRQF = /BA * BS * /A3 *  A2 *  A1
+;IRQF  = /BA * BS *  A3 * /A2 * /A1
 
 DESCRIPTION
 
