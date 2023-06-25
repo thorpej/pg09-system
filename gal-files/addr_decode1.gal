@@ -1,8 +1,8 @@
 GAL22V10
 ADDRDEC1
 
-A5  A6   A7   A8    A9    A10   A11   A12   A13   A14   A15   GND
-NC /IO8 /IO9 /IO10 /IO11 /IO12 /IO13 /IO14 /IO15 /FRAM /HBRAM VCC
+A5  A6    A7     A8   A9   A10   A11   A12   A13   A14   A15  GND
+NC /FRAM /HBRAM /IO8 /IO9 /IO10 /IO11 /IO12 /IO13 /IO14 /IO15 VCC
 
 ;
 ; Decodes Bank #1 (8-15) of the 32 32-byte I/O device selects.
