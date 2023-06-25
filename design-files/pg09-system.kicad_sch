@@ -1560,6 +1560,11 @@
     (uuid fde61c9f-64d3-41e1-acc1-0fc8ee26f691)
   )
 
+  (text "~{NMI}, ~{IRQ}, ~{FIRQ}, and ~{HALT}\nare pulled-up on the Address\nDecoder sheet."
+    (at 34.29 158.75 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 05c95ffc-57c1-47e9-8e6c-9095375078b6)
+  )
   (text "mem_intf.chp" (at 198.12 93.98 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 09435e44-378b-47c6-997f-c134ad62cce5)
