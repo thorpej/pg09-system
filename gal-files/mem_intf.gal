@@ -1,8 +1,8 @@
 GAL22V10
 MEMINTF
 
-E   RW  BA  BS      A1  A2  A3  A4  FLASHWREN NC NC  GND
-NC /RD /WR /FLASHWR nA4 nA3 nA2 NC  HALTED    NC RWO VCC
+E  RW BA  BS       A1  A2 A3  A4  FLASHWREN NC     NC  GND
+NC NC NC /FLASHWR /RD /WR nA4 nA3 nA2       HALTED RWO VCC
 
 ;
 ; Generate the /RD and /WR strobes.

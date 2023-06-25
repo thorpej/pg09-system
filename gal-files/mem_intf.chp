@@ -7,23 +7,23 @@
                           |                 |
                        RW |  2           23 | RWO
                           |                 |
-                       BA |  3           22 | NC
+                       BA |  3           22 | HALTED
                           |                 |
-                       BS |  4           21 | HALTED
+                       BS |  4           21 | nA2
                           |                 |
-                       A1 |  5           20 | NC
+                       A1 |  5           20 | nA3
                           |                 |
-                       A2 |  6           19 | nA2
+                       A2 |  6           19 | nA4
                           |                 |
-                       A3 |  7           18 | nA3
+                       A3 |  7           18 | /WR
                           |                 |
-                       A4 |  8           17 | nA4
+                       A4 |  8           17 | /RD
                           |                 |
                 FLASHWREN |  9           16 | /FLASHWR
                           |                 |
-                       NC | 10           15 | /WR
+                       NC | 10           15 | NC
                           |                 |
-                       NC | 11           14 | /RD
+                       NC | 11           14 | NC
                           |                 |
                       GND | 12           13 | NC
                           -------------------
