@@ -77,14 +77,14 @@ D1.R  = LA * L0 * /UA
 
 D0.T  = GND		; no need to register an unchanging output.
 
-D7.E = CS0 * CS1 * CS2 * RWB
-D6.E = CS0 * CS1 * CS2 * RWB
-D5.E = CS0 * CS1 * CS2 * RWB
-D4.E = CS0 * CS1 * CS2 * RWB
-D3.E = CS0 * CS1 * CS2 * RWB
-D2.E = CS0 * CS1 * CS2 * RWB
-D1.E = CS0 * CS1 * CS2 * RWB
-D0.E = CS0 * CS1 * CS2 * RWB
+D7.E = CS0 * CS1 * CS2 * RWB * PHI2
+D6.E = CS0 * CS1 * CS2 * RWB * PHI2
+D5.E = CS0 * CS1 * CS2 * RWB * PHI2
+D4.E = CS0 * CS1 * CS2 * RWB * PHI2
+D3.E = CS0 * CS1 * CS2 * RWB * PHI2
+D2.E = CS0 * CS1 * CS2 * RWB * PHI2
+D1.E = CS0 * CS1 * CS2 * RWB * PHI2
+D0.E = CS0 * CS1 * CS2 * RWB * PHI2
 
 DESCRIPTION
 
