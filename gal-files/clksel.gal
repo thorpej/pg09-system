@@ -1,0 +1,62 @@
+GAL22V10
+CLKSEL
+
+PHI2 CLKIN16 CLKIN8 CLKIN4 /CLKSEL16 /CLKSEL8 /CLKSEL4 CS0 CS1 /CS2 RWB GND
+NC   CLKOUT  NC     D7      D6        D5       D4      D3  D2   D1  D0  VCC
+
+;
+; This is a clock selector.  It takes the 16MHz, 8MHZ, and 4MHz clock
+; signals from the first half of the clock generator, and based on an
+; external jumper setting, routes the selected clock to the CLKOUT pin.
+; In addition, it makes the selected 6809 clock speed (4MHz, 2MHz, or
+; 1MHz) readable from an output register (value will be 1, 2, or 4).
+;
+; Invalid jumper settings result in no clock signal.
+;
+; Function table for CLKOUT:
+;
+; CLKIN16 CLKIN8 CLKIN4 CLKSEL16 CLKSEL8 CLKSEL4     CLKOUT
+;       x      x      x        H       H       H          L
+;       x      x      x        L       L       x          L
+;       x      x      x        x       L       L          L
+;       x      x      x        L       x       L          L
+;       H      x      x        L       H       H          H
+;       L      x      x        L       H       H          L
+;       x      H      x        H       L       H          H
+;       x      L      x        H       L       H          L
+;       x      x      H        H       H       L          H
+;       x      x      L        H       H       L          L
+;
+CLKOUT = CLKIN16 *  CLKSEL16 * /CLKSEL8 * /CLKSEL4
+       + CLKIN8  * /CLKSEL16 *  CLKSEL8 * /CLKSEL4
+       + CLKIN4  * /CLKSEL16 * /CLKSEL8 *  CLKSEL4
+
+;
+; Function table for clock speed register:
+;
+; CLKSEL16 CLKSEL8 CLKSEL4     D7 D6 D5 D4 D3 D2 D1 D0
+;        H       H       H      L  L  L  L  L  L  L  L
+;        L       L       x      L  L  L  L  L  L  L  L
+;        x       L       L      L  L  L  L  L  L  L  L
+;        L       x       L      L  L  L  L  L  L  L  L
+;        H       H       L      L  L  L  L  L  L  L  H
+;        H       L       H      L  L  L  L  L  L  H  L
+;        L       H       H      L  L  L  L  L  H  L  L
+;
+D7.T = GND
+D6.T = GND
+D5.T = GND
+D4.T = GND
+D3.T = GND
+D2.T =  CLKSEL16 * /CLKSEL8 * /CLKSEL4
+D1.T = /CLKSEL16 *  CLKSEL8 * /CLKSEL4
+D0.T = /CLKSEL16 * /CLKSEL8 *  CLKSEL4
+
+D7.E = CS0 * CS1 * CS2 * RWB * PHI2
+D6.E = CS0 * CS1 * CS2 * RWB * PHI2
+D5.E = CS0 * CS1 * CS2 * RWB * PHI2
+D4.E = CS0 * CS1 * CS2 * RWB * PHI2
+D3.E = CS0 * CS1 * CS2 * RWB * PHI2
+D2.E = CS0 * CS1 * CS2 * RWB * PHI2
+D1.E = CS0 * CS1 * CS2 * RWB * PHI2
+D0.E = CS0 * CS1 * CS2 * RWB * PHI2
