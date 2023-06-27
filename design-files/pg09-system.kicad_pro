@@ -522,6 +522,10 @@
     [
       "ac00d1d6-4857-42f9-90e1-ab396f3828b3",
       "UARTs"
+    ],
+    [
+      "91a9a724-fdbf-449f-802f-4b411bd73828",
+      "Power Supply"
     ]
   ],
   "text_variables": {}
