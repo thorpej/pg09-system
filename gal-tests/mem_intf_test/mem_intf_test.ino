@@ -52,44 +52,38 @@ const int out_pins[] = {
 };
 
 /* Pins used for inputs. */
-#define IN_RD       22
-#define IN_WR       23
-#define IN_HALTED   24
-#define IN_IRQF     25
-#define IN_FIRQF    26
-#define IN_FLASHWR  27
-#define IN_RWO      28
-#define IN_nA2      29
-#define IN_nA3      30
-#define IN_nA4      31
+#define IN_RWO      22
+#define IN_HALTED   23
+#define IN_nA2      24
+#define IN_nA3      25
+#define IN_nA4      26
+#define IN_WR       27
+#define IN_RD       28
+#define IN_FLASHWR  29
 
 struct signal_desc {
   const char *name;
   int         pin;
 };
 
-#define RD        0
-#define WR        1
-#define HALTED    2
-#define IRQF      3
-#define FIRQF     4
-#define FLASHWR   5
-#define RWO       6
-#define nA2       7
-#define nA3       8
-#define nA4       9
+#define RWO       0
+#define HALTED    1
+#define nA2       2
+#define nA3       3
+#define nA4       4
+#define WR        5
+#define RD        6
+#define FLASHWR   7
 
 const struct signal_desc signal_map[] = {
-[RD]      = { .name = "/RD",      .pin = IN_RD },
-[WR]      = { .name = "/WR",      .pin = IN_WR },
-[HALTED]  = { .name = "HALTED",   .pin = IN_HALTED },
-[IRQF]    = { .name = "IRQF",     .pin = IN_IRQF },
-[FIRQF]   = { .name = "FIRQF",    .pin = IN_FIRQF },
-[FLASHWR] = { .name = "/FLASHWR", .pin = IN_FLASHWR },
 [RWO]     = { .name = "RWO",      .pin = IN_RWO },
+[HALTED]  = { .name = "HALTED",   .pin = IN_HALTED },
 [nA2]     = { .name = "nA2",      .pin = IN_nA2 },
 [nA3]     = { .name = "nA3",      .pin = IN_nA3 },
 [nA4]     = { .name = "nA4",      .pin = IN_nA4 },
+[WR]      = { .name = "/WR",      .pin = IN_WR },
+[RD]      = { .name = "/RD",      .pin = IN_RD },
+[FLASHWR] = { .name = "/FLASHWR", .pin = IN_FLASHWR },
 };
 #define signal_map_count (sizeof(signal_map) / sizeof(signal_map[0]))
 
@@ -250,32 +244,6 @@ loop()
     digitalWrite(OUT_BA, ba);
     digitalWrite(OUT_BS, bs);
     check_output(HALTED, halted);
-  }
-
-  /*
-   * Check IRQF and FIRQF signals.
-   */
-  for (i = 0; i < 4; i++) {
-    bool ba = !!(i & 1);
-    bool bs = !!(i & 2);
-    bool intr_ack = !ba & bs;
-
-    digitalWrite(OUT_BA, ba);
-    digitalWrite(OUT_BS, bs);
-
-    for (uint16_t address = 0xfff0; address != 0; address++) {
-      bool firq_fetch = intr_ack && (address == 0xFFF6 || address == 0xFFF7);
-      bool irq_fetch  = intr_ack && (address == 0xFFF8 || address == 0xFFF9);
-      set_address(address);
-
-      tla_printf("BA=%d BS=%d addr=$%04X -> IRQF=%s\r\n",
-                 ba, bs, address, tf(irq_fetch));
-      check_output(IRQF, irq_fetch);
-
-      tla_printf("BA=%d BS=%d addr=$%04X -> FIRQF=%s\r\n",
-                 ba, bs, address, tf(firq_fetch));
-      check_output(FIRQF, firq_fetch);
-    }
   }
 
   /*
