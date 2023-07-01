@@ -32,17 +32,19 @@
  * reset and power-down control from the 6809 via an I/O port on one
  * of the system's 65C21s (the banked ROM PIA has port B free).
  *
- * 3 input pins are used:
+ * 4 input pins are used:
  * - Power button (momentary on for power-on, hold for 3 seconds
  *   for power-off).
- * - Reset request from 6809.
- * - Power-off request from 6809.
+ * - A "host request" pin that notifies the microcontroller that
+ *   the 6809 wants something.
+ * - Reset request from 6809 (gated by host request).
+ * - Power-off request from 6809 (gated by host request).
  *
  * 2 output pins are used:
  * - Drive #PSU_ON low on the ATX power supply.
  * - Drive #RESET low on the 6809.
  *
- * The output pins are confused as INPUT until they're ready to drive
+ * The output pins are configured as INPUT until they're ready to drive
  * their respective signals.
  *
  * This is targeted at the Adafruit Metro Mini, which is software-compatible
@@ -61,6 +63,7 @@
 
 #define PSU_ON_PIN          8   /* not a PWM pin */
 #define RST_OUT_PIN         12  /* not a PWM pin */
+#define POWER_LED_PIN       13  /* system LED pin */
 
 /*
  * We de-bounce input signals for this long, and consider
@@ -68,6 +71,7 @@
  */
 #define INPUT_DEBOUNCE_DURATION 100   /* milliseconds */
 #define INPUT_DEBOUNCE_THRESH   (INPUT_DEBOUNCE_DURATION - ((INPUT_DEBOUNCE_DURATION / 10) * 2))
+#define POWER_LED_TOGGLE_TICKS  ((1000 / INPUT_DEBOUNCE_DURATION) / 2)
 
 #define BUTTON_DOWN_TIME        3000  /* milliseconds */
 #define BUTTON_DOWN_STATES      (BUTTON_DOWN_TIME / INPUT_DEBOUNCE_DURATION)
@@ -124,6 +128,32 @@ setup_pins(void)
   /* Output pins. Inputs until we drive them. */
   pinMode(PSU_ON_PIN, INPUT);
   pinMode(RST_OUT_PIN, INPUT);
+
+  /* Regular output pins. */
+  digitalWrite(POWER_LED_PIN, LOW);
+  pinMode(POWER_LED_PIN, OUTPUT);
+}
+
+/*
+ * set_power_led --
+ *
+ * Set the state of the power LED.
+ */
+static void
+set_power_led(bool enable)
+{
+  digitalWrite(POWER_LED_PIN, enable);
+}
+
+/*
+ * toggle_power_led --
+ *
+ * Toggle the state of the power LED.
+ */
+static void
+toggle_power_led(void)
+{
+  digitalWrite(POWER_LED_PIN, !digitalRead(POWER_LED_PIN));
 }
 
 /*
@@ -152,6 +182,7 @@ static int
 set_psu_on(bool enable)
 {
   set_output_signal(PSU_ON_PIN, enable);
+  set_power_led(enable);
   return enable ? STATE_ON : STATE_OFF;
 }
 
@@ -226,8 +257,8 @@ reset_system(void)
 /*
  * button_isr / host_req_isr --
  *
- * Interrupt service routines that just says "Yup, interrupt fired!",
- * which is used to signal to wait_for_request() to not go into power
+ * Interrupt service routines that just say "Yup, interrupt fired!",
+ * which is used to signal wait_for_request() to not go into power
  * saving mode.
  */
 static void
@@ -347,9 +378,13 @@ state_ON_BUTTON_DOWN(void)
     if (next_state == STATE_POWER_OFF) {
       Debug("[ON_BUTTON_DOWN] power_button -> POWER_OFF");
     }
+    if (((state - STATE_ON_BUTTON_DOWN(0)) % POWER_LED_TOGGLE_TICKS) == 0) {
+      toggle_power_led();
+    }
     return next_state;
   }
   Debug("[ON_BUTTON_DOWN] -> ON");
+  set_power_led(true);
   return STATE_ON;
 }
 
