@@ -438,16 +438,26 @@ loop(void)
 {
   int next_state;
 
-  if (state == STATE_OFF) {
-    next_state = state_OFF();
-  } else if (state == STATE_ON) {
-    next_state = state_ON();
-  } else if (state >= STATE_ON_BUTTON_DOWN(0) && state < STATE_ON_BUTTON_DOWN(BUTTON_DOWN_STATES)) {
-    next_state = state_ON_BUTTON_DOWN();
-  } else if (state == STATE_POWER_OFF) {
-    next_state = state_POWER_OFF();
-  } else {
-    next_state = state_recover();
+  switch (state) {
+    case STATE_OFF:
+      next_state = state_OFF();
+      break;
+
+    case STATE_ON:
+      next_state = state_ON();
+      break;
+
+    case STATE_ON_BUTTON_DOWN(0) ... STATE_ON_BUTTON_DOWN(BUTTON_DOWN_STATES - 1):
+      next_state = state_ON_BUTTON_DOWN();
+      break;
+
+      case STATE_POWER_OFF:
+      next_state = state_POWER_OFF();
+      break;
+
+    default:
+      next_state = state_recover();
+      break;
   }
   state = next_state;
 }
