@@ -304,12 +304,12 @@ snooze(void)
  * Wait for a request to be sent.
  */
  static void
- wait_for_request(void)
- {
-  while (! sample_inputs(true)) {
-    snooze();
-  }
+wait_for_request(void)
+{
+ while (! sample_inputs(true)) {
+   snooze();
  }
+}
 
 static int
 state_OFF(void)
