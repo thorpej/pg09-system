@@ -68,14 +68,14 @@
 #define HOST_REQ_BIT1_PIN   5
 #define PSU_ON_PIN          8   /* not a PWM pin */
 #define RST_OUT_PIN         12  /* not a PWM pin */
-#define POWER_LED_PIN       13  /* system LED pin */
+#define POWER_LED_PIN       LED_BUILTIN
 
 #define HOST_REQ_RESET      0
 #define HOST_REQ_POWEROFF   1
 
 /*
- * We de-bounce input signals for this long, and consider
- * them asserted if they're asserted for 80% of that time.
+ * We de-bounce the power button for this long, and consider
+ * it asserted if it's asserted for 80% of that time.
  */
 #define INPUT_DEBOUNCE_DURATION 100   /* milliseconds */
 #define INPUT_DEBOUNCE_THRESH   (INPUT_DEBOUNCE_DURATION - ((INPUT_DEBOUNCE_DURATION / 10) * 2))
