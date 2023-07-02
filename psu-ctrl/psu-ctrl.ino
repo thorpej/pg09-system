@@ -32,6 +32,12 @@
  * reset and power-down control from the 6809 via an I/O port on one
  * of the system's 65C21s (the banked ROM PIA has port B free).
  *
+ * - HOST_REQ_BIT0_PIN -> PB0
+ * - HOST_REQ_BIT1_PIN -> PB1
+ * - HOST_REQ_PIN -> CB2
+ *
+ * Port B on the 65C21 should be configured to pulse CB2 on writes to Port B.
+ *
  * 4 input pins are used:
  * - Power button (momentary on for power-on, hold for 3 seconds
  *   for power-off).
@@ -58,12 +64,14 @@
 
 #define POWER_BUTTON_PIN    2   /* uses interrupt */
 #define HOST_REQ_PIN        3   /* uses interrupt */
-#define RESET_REQ_PIN       4   /* paired with HOST_REQ_PIN */
-#define POWEROFF_REQ_PIN    5   /* paired with HOST_REQ_PIN */
-
+#define HOST_REQ_BIT0_PIN   4
+#define HOST_REQ_BIT1_PIN   5
 #define PSU_ON_PIN          8   /* not a PWM pin */
 #define RST_OUT_PIN         12  /* not a PWM pin */
 #define POWER_LED_PIN       13  /* system LED pin */
+
+#define HOST_REQ_RESET      0
+#define HOST_REQ_POWEROFF   1
 
 /*
  * We de-bounce input signals for this long, and consider
@@ -81,58 +89,17 @@
 #define STATE_ON_BUTTON_DOWN(x) (2 + (x))
 #define STATE_POWER_OFF         STATE_ON_BUTTON_DOWN(BUTTON_DOWN_STATES)
 
-#define POWER_BUTTON_INPUT      0
-#define HOST_REQ_INPUT          1
-#define RESET_REQ_INPUT         2
-#define POWEROFF_REQ_INPUT      3
-#define INPUT_COUNT             4
-int inputs[INPUT_COUNT];
-int input_pins[] = {
-  [POWER_BUTTON_INPUT]          = POWER_BUTTON_PIN,
-  [HOST_REQ_INPUT]              = HOST_REQ_PIN,
-  [RESET_REQ_INPUT]             = RESET_REQ_PIN,
-  [POWEROFF_REQ_INPUT]          = POWEROFF_REQ_PIN,
-};
-int input_levels[] = {
-  [POWER_BUTTON_INPUT]          = LOW,
-  [HOST_REQ_INPUT]              = HIGH,
-  [RESET_REQ_INPUT]             = HIGH,
-  [POWEROFF_REQ_INPUT]          = HIGH,
-};
-
-#define power_button            inputs[POWER_BUTTON_INPUT]
-#define reset_req               inputs[RESET_REQ_INPUT]
-#define poweroff_req            inputs[POWEROFF_REQ_INPUT]
-
 static volatile bool button_edge_detected;
 static volatile bool host_req_edge_detected;
-static volatile int state;
+static volatile bool host_req_command_detected;
+
+static bool host_req_valid;
+static bool host_req_command;
+static int power_button;
+static int state;
 
 #define Info(x)   do { if (Serial) { Serial.println(x); } } while (0)
 #define Debug(x)  do { if (Serial) { Serial.print("DEBUG: "); Serial.println(x); } } while (0)
-
-/*
- * setup_pins --
- *
- * Set the configuraiton of the input and output pins.
- */
-static void
-setup_pins(void)
-{
-  /* Input pins. */
-  pinMode(POWER_BUTTON_PIN, INPUT);
-  pinMode(HOST_REQ_PIN, INPUT);
-  pinMode(RESET_REQ_PIN, INPUT);
-  pinMode(POWEROFF_REQ_PIN, INPUT);
-
-  /* Output pins. Inputs until we drive them. */
-  pinMode(PSU_ON_PIN, INPUT);
-  pinMode(RST_OUT_PIN, INPUT);
-
-  /* Regular output pins. */
-  digitalWrite(POWER_LED_PIN, LOW);
-  pinMode(POWER_LED_PIN, OUTPUT);
-}
 
 /*
  * set_power_led --
@@ -198,6 +165,20 @@ set_rst_out(bool enable)
 }
 
 /*
+ * host_req --
+ *
+ * Check if the host requested the specified operation.
+ */
+static bool
+host_req(int req)
+{
+  if (! host_req_valid) {
+    return false;
+  }
+  return req == host_req_command;
+}
+
+/*
  * sample_inputs --
  *
  * Sample the input signals.
@@ -205,37 +186,31 @@ set_rst_out(bool enable)
 static bool
 sample_inputs(bool require_button_edge)
 {
-  int tick, i;
+  int tick;
 
   cli();
   bool button_edge = button_edge_detected;
   button_edge_detected = false;
-  bool host_req_edge = host_req_edge_detected;
+
+  host_req_valid = host_req_edge_detected;
+  host_req_command = host_req_command_detected;
   host_req_edge_detected = false;
   sei();
 
-  memset(inputs, 0, sizeof(inputs));
+  power_button = 0;
 
   for (tick = 0; tick < INPUT_DEBOUNCE_DURATION; tick++) {
-    for (i = 0; i < INPUT_COUNT; i++) {
-      inputs[i] += (digitalRead(input_pins[i]) == input_levels[i]);
-    }
+    power_button += (digitalRead(POWER_BUTTON_PIN) == LOW);
     delay(1);
   }
 
-  for (i = 0; i < INPUT_COUNT; i++) {
-    if (inputs[i] < INPUT_DEBOUNCE_THRESH) {
-      inputs[i] = 0;
-    }
+  if (power_button < INPUT_DEBOUNCE_THRESH) {
+    power_button = 0;
   }
-
   if (require_button_edge && ! button_edge) {
     power_button = 0;
   }
-  if (! inputs[HOST_REQ_INPUT]) {
-    reset_req = poweroff_req = 0;
-  }
-  return power_button || reset_req || poweroff_req;
+  return power_button || host_req_valid;
 }
 
 /*
@@ -271,6 +246,9 @@ static void
 host_req_isr(void)
 {
   host_req_edge_detected = true;
+  host_req_command_detected =
+      (digitalRead(HOST_REQ_BIT0_PIN) ? 0x01 : 0) |
+      (digitalRead(HOST_REQ_BIT1_PIN) ? 0x02 : 0);
 }
 
 #ifdef SLEEP_MODE_PWR_SAVE
@@ -338,12 +316,12 @@ state_ON(void)
    */
   Debug("[ON] Waiting for inputs...");
   wait_for_request();
-  if (poweroff_req) {
-    Debug("[ON] poweroff_req -> OFF");
+  if (host_req(HOST_REQ_POWEROFF)) {
+    Debug("[ON] HOST_REQ_POWEROFF -> OFF");
     return set_psu_on(false);
   }
-  if (reset_req) {
-    Debug("[ON] reset_req");
+  if (host_req(HOST_REQ_RESET)) {
+    Debug("[ON] HOST_REQ_RESET");
     reset_system();
   }
   if (power_button) {
@@ -364,12 +342,12 @@ state_ON_BUTTON_DOWN(void)
    */
   /* Don't log here -- it'll be spammy. */
   sample_inputs(false);
-  if (poweroff_req) {
-    Debug("[ON_BUTTON_DOWN] poweroff_req -> OFF");
+  if (host_req(HOST_REQ_POWEROFF)) {
+    Debug("[ON_BUTTON_DOWN] HOST_REQ_POWEROFF -> OFF");
     return set_psu_on(false);
   }
-  if (reset_req) {
-    Debug("[ON_BUTTON_DOWN] reset_req");
+  if (host_req(HOST_REQ_RESET)) {
+    Debug("[ON_BUTTON_DOWN] HOST_REQ_RESET");
     reset_system();
   }
   if (power_button) {
@@ -420,11 +398,26 @@ setup(void)
   Info("");
 
   Debug("Initializing pins.");
-  setup_pins();
+  /* Input pins. */
+  pinMode(POWER_BUTTON_PIN, INPUT_PULLUP);
+  pinMode(HOST_REQ_PIN, INPUT_PULLUP);
+  pinMode(HOST_REQ_BIT0_PIN, INPUT_PULLUP);
+  pinMode(HOST_REQ_BIT1_PIN, INPUT_PULLUP);
+
+  /*
+   * Output pins. Inputs until we drive them.  They
+   * are externally pulled-up.
+   */
+  pinMode(PSU_ON_PIN, INPUT);
+  pinMode(RST_OUT_PIN, INPUT);
+
+  /* Regular output pins. */
+  digitalWrite(POWER_LED_PIN, LOW);
+  pinMode(POWER_LED_PIN, OUTPUT);
 
   Debug("Initializing interrupts.");
   attachInterrupt(digitalPinToInterrupt(POWER_BUTTON_PIN), button_isr, FALLING);
-  attachInterrupt(digitalPinToInterrupt(HOST_REQ_PIN), host_req_isr, RISING);
+  attachInterrupt(digitalPinToInterrupt(HOST_REQ_PIN), host_req_isr, FALLING);
 
   /* power down a bunch of microcontroller blocks we don't need. */
   Debug("Disabling unneeded functional blocks.");
