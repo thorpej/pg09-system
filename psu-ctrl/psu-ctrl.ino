@@ -43,8 +43,7 @@
  *   for power-off).
  * - A "host request" pin that notifies the microcontroller that
  *   the 6809 wants something.
- * - Reset request from 6809 (gated by host request).
- * - Power-off request from 6809 (gated by host request).
+ * - A 2-bit host request value.
  *
  * 2 output pins are used:
  * - Drive #PSU_ON low on the ATX power supply.
@@ -70,8 +69,9 @@
 #define RST_OUT_PIN         12  /* not a PWM pin */
 #define POWER_LED_PIN       LED_BUILTIN
 
-#define HOST_REQ_RESET      0
-#define HOST_REQ_POWEROFF   1
+/* Host commands. */
+#define HOST_REQ_POWEROFF   0
+#define HOST_REQ_RESET      1
 
 /*
  * We de-bounce the power button for this long, and consider
