@@ -99,7 +99,7 @@ action_program()
 	# "Do NOT enable write-protect", otherwise writing
 	# do the device is unreliable!
 	#
-	$minipro -p "$galtype" -P -w $"jedfile"
+	$minipro -p "$galtype" -P -w "$jedfile"
 
 	# Now explicitly verify the device programmed correctly.
 	$minipro -p "$galtype" -m "$jedfile"
