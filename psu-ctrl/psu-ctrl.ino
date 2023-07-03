@@ -84,10 +84,13 @@
 #define BUTTON_DOWN_TIME        3000  /* milliseconds */
 #define BUTTON_DOWN_STATES      (BUTTON_DOWN_TIME / INPUT_DEBOUNCE_DURATION)
 
-#define STATE_OFF               0
-#define STATE_ON                1
-#define STATE_ON_BUTTON_DOWN(x) (2 + (x))
-#define STATE_POWER_OFF         STATE_ON_BUTTON_DOWN(BUTTON_DOWN_STATES)
+#define STATE_no_change             -1
+#define STATE_OFF                   0
+#define STATE_ON                    1
+#define STATE_ON_BUTTON_DOWN(x)     (2 + (x))
+#define STATE_ON_BUTTON_DOWN_FIRST  STATE_ON_BUTTON_DOWN(0)
+#define STATE_ON_BUTTON_DOWN_LAST   STATE_ON_BUTTON_DOWN(BUTTON_DOWN_STATES - 1)
+#define STATE_POWER_OFF             (STATE_ON_BUTTON_DOWN_LAST + 1)
 
 static volatile bool button_edge_detected;
 static volatile bool host_req_edge_detected;
@@ -303,8 +306,7 @@ state_OFF(void)
     Debug("[OFF] power_button -> ON");
     return set_psu_on(true);
   }
-  Debug("[OFF] -> OFF");
-  return STATE_OFF;
+  return STATE_no_change;
 }
 
 static int
@@ -328,8 +330,7 @@ state_ON(void)
     Debug("[ON] power_button -> ON_BUTTON_DOWN");
     return STATE_ON_BUTTON_DOWN(0);
   }
-  Debug("[ON] -> ON");
-  return STATE_ON;
+  return STATE_no_change;
 }
 
 static int
@@ -356,7 +357,7 @@ state_ON_BUTTON_DOWN(void)
     if (next_state == STATE_POWER_OFF) {
       Debug("[ON_BUTTON_DOWN] power_button -> POWER_OFF");
     }
-    if (((state - STATE_ON_BUTTON_DOWN(0)) % POWER_LED_TOGGLE_TICKS) == 0) {
+    if (((state - STATE_ON_BUTTON_DOWN_FIRST) % POWER_LED_TOGGLE_TICKS) == 0) {
       toggle_power_led();
     }
     return next_state;
@@ -440,7 +441,7 @@ loop(void)
       next_state = state_ON();
       break;
 
-    case STATE_ON_BUTTON_DOWN(0) ... STATE_ON_BUTTON_DOWN(BUTTON_DOWN_STATES - 1):
+    case STATE_ON_BUTTON_DOWN_FIRST ... STATE_ON_BUTTON_DOWN_LAST:
       next_state = state_ON_BUTTON_DOWN();
       break;
 
@@ -452,5 +453,7 @@ loop(void)
       next_state = state_recover();
       break;
   }
-  state = next_state;
+  if (next_state != STATE_no_change) {
+    state = next_state;
+  }
 }
