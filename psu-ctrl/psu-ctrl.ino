@@ -61,6 +61,8 @@
 #include <avr/power.h>
 #include <avr/sleep.h>
 
+#define DEBUG
+
 #define POWER_BUTTON_PIN    2   /* uses interrupt */
 #define HOST_REQ_PIN        3   /* uses interrupt */
 #define HOST_REQ_BIT0_PIN   4
@@ -85,12 +87,34 @@
 #define BUTTON_DOWN_STATES      (BUTTON_DOWN_TIME / INPUT_DEBOUNCE_DURATION)
 
 #define STATE_no_change             -1
-#define STATE_OFF                   0
-#define STATE_ON                    1
-#define STATE_ON_BUTTON_DOWN(x)     (2 + (x))
+#define STATE_INITIAL               0
+#define STATE_OFF                   (STATE_INITIAL + 1)
+#define STATE_ON                    (STATE_OFF + 1)
+#define STATE_ON_BUTTON_DOWN(x)     (STATE_ON + 1 + (x))
 #define STATE_ON_BUTTON_DOWN_FIRST  STATE_ON_BUTTON_DOWN(0)
 #define STATE_ON_BUTTON_DOWN_LAST   STATE_ON_BUTTON_DOWN(BUTTON_DOWN_STATES - 1)
 #define STATE_POWER_OFF             (STATE_ON_BUTTON_DOWN_LAST + 1)
+
+static const char *
+state_name(int s)
+{
+  switch (s) {
+    case STATE_OFF:
+      return "OFF";
+
+    case STATE_ON:
+      return "ON";
+
+    case STATE_ON_BUTTON_DOWN_FIRST ... STATE_ON_BUTTON_DOWN_LAST:
+      return "ON_BUTTON_DOWN";
+
+    case STATE_POWER_OFF:
+      return "POWER_OFF";
+
+    default:
+      return "???";
+  }
+}
 
 static volatile bool button_edge_detected;
 static volatile bool host_req_edge_detected;
@@ -101,8 +125,50 @@ static bool host_req_command;
 static int power_button;
 static int state;
 
-#define Info(x)   do { if (Serial) { Serial.println(x); } } while (0)
-#define Debug(x)  do { if (Serial) { Serial.print("DEBUG: "); Serial.println(x); } } while (0)
+static void
+print_state(int s, bool brackets)
+{
+  if (Serial && s != STATE_INITIAL) {
+    if (brackets) {
+      Serial.print("[");
+    }
+    Serial.print(state_name(s));
+    if (brackets) {
+      Serial.print("] ");
+    }
+  }
+}
+
+static bool
+print_current_state(void)
+{
+  print_state(state, true);
+}
+
+static void
+Info(const char *str)
+{
+  if (Serial) {
+    print_current_state();
+    Serial.println(str);
+  }
+}
+
+#ifdef DEBUG
+static void
+Debug_internal(const char *str)
+{
+  if (Serial) {
+    print_current_state();
+    Serial.print("DEBUG: ");
+    Serial.println(str);
+  }
+}
+
+#define Debug(x)  Debug_internal(x)
+#else
+#define Debug(x)  /* nothing */
+#endif
 
 /*
  * set_power_led --
@@ -300,10 +366,10 @@ state_OFF(void)
    * power button.  If we get that trigger at all, we transition
    * to ON state.
    */
-  Debug("[OFF] Waiting for inputs...");
+  Info("Waiting for inputs...");
   wait_for_request();
   if (power_button) {
-    Debug("[OFF] power_button -> ON");
+    Debug("power_button");
     return set_psu_on(true);
   }
   return STATE_no_change;
@@ -316,19 +382,19 @@ state_ON(void)
    * In the ON state, we're waiting for requests from the host
    * or the power button.
    */
-  Debug("[ON] Waiting for inputs...");
+  Info("Waiting for inputs...");
   wait_for_request();
   if (host_req(HOST_REQ_POWEROFF)) {
-    Debug("[ON] HOST_REQ_POWEROFF -> OFF");
+    Debug("HOST_REQ_POWEROFF");
     return set_psu_on(false);
   }
   if (host_req(HOST_REQ_RESET)) {
-    Debug("[ON] HOST_REQ_RESET");
+    Debug("HOST_REQ_RESET");
     reset_system();
   }
   if (power_button) {
-    Debug("[ON] power_button -> ON_BUTTON_DOWN");
-    return STATE_ON_BUTTON_DOWN(0);
+    Debug("power_button");
+    return STATE_ON_BUTTON_DOWN_FIRST;
   }
   return STATE_no_change;
 }
@@ -344,25 +410,25 @@ state_ON_BUTTON_DOWN(void)
   /* Don't log here -- it'll be spammy. */
   sample_inputs(false);
   if (host_req(HOST_REQ_POWEROFF)) {
-    Debug("[ON_BUTTON_DOWN] HOST_REQ_POWEROFF -> OFF");
+    Debug("HOST_REQ_POWEROFF");
     return set_psu_on(false);
   }
   if (host_req(HOST_REQ_RESET)) {
-    Debug("[ON_BUTTON_DOWN] HOST_REQ_RESET");
+    Debug("HOST_REQ_RESET");
     reset_system();
   }
   if (power_button) {
     /* Don't log here -- it'll be spammy. */
     int next_state = state + 1;
     if (next_state == STATE_POWER_OFF) {
-      Debug("[ON_BUTTON_DOWN] power_button -> POWER_OFF");
+      Debug("power_button held");
     }
     if (((state - STATE_ON_BUTTON_DOWN_FIRST) % POWER_LED_TOGGLE_TICKS) == 0) {
       toggle_power_led();
     }
     return next_state;
   }
-  Debug("[ON_BUTTON_DOWN] -> ON");
+  Debug("power_button released");
   set_power_led(true);
   return STATE_ON;
 }
@@ -370,7 +436,6 @@ state_ON_BUTTON_DOWN(void)
 static int
 state_POWER_OFF(void)
 {
-  Debug("[POWER_OFF] -> OFF");
   return set_psu_on(false);
 }
 
@@ -381,12 +446,14 @@ state_recover(void)
    * We lost our mind, so try to get back on track.
    */
   if (digitalRead(PSU_ON_PIN)) {
-    Debug("[RECOVER] -> OFF");
+    Debug("RECOVERY: #PSU_ON is high");
     return state_OFF;
   }
-  Debug("[RECOVER] -> ON");
+  Debug("RECOVERY: #PSU_ON is low");
   return state_ON;
 }
+
+#define VERSION "1.0"
 
 void
 setup(void)
@@ -394,11 +461,11 @@ setup(void)
   Serial.begin(115200);
 
   Info("");
-  Info(">>> 6809 Playground PSU controller 0.1");
+  Info(">>> 6809 Playground PSU controller " VERSION);
   Info(">>> Copyright (c) 2023 Jason R. Thorpe");
   Info("");
 
-  Debug("Initializing pins.");
+  Info("Initializing pins.");
   /* Input pins. */
   pinMode(POWER_BUTTON_PIN, INPUT_PULLUP);
   pinMode(HOST_REQ_PIN, INPUT_PULLUP);
@@ -416,15 +483,28 @@ setup(void)
   digitalWrite(POWER_LED_PIN, LOW);
   pinMode(POWER_LED_PIN, OUTPUT);
 
-  Debug("Initializing interrupts.");
+  Info("Initializing interrupts.");
   attachInterrupt(digitalPinToInterrupt(POWER_BUTTON_PIN), button_isr, FALLING);
   attachInterrupt(digitalPinToInterrupt(HOST_REQ_PIN), host_req_isr, FALLING);
 
   /* power down a bunch of microcontroller blocks we don't need. */
-  Debug("Disabling unneeded functional blocks.");
+  Info("Disabling unneeded functional blocks.");
   power_adc_disable();
   power_spi_disable();
   power_twi_disable();
+
+  /* And we're off! */
+  state = STATE_OFF;
+}
+
+static bool
+quiet_state_change(int next_state)
+{
+  if (next_state >= STATE_ON_BUTTON_DOWN_FIRST + 1 &&
+      next_state <= STATE_ON_BUTTON_DOWN_LAST) {
+    return true;
+  }
+  return false;
 }
 
 void
@@ -454,6 +534,12 @@ loop(void)
       break;
   }
   if (next_state != STATE_no_change) {
+    if (Serial && !quiet_state_change(next_state)) {
+      print_current_state();
+      Serial.print("New state -> ");
+      print_state(next_state, false);
+      Serial.println("");
+    }
     state = next_state;
   }
 }
