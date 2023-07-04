@@ -2925,6 +2925,23 @@
     )
   )
 
+  (sheet (at 12.7 38.1) (size 39.37 15.24) (fields_autoplaced)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0000))
+    (uuid f2ee21e0-2cfa-4d23-9aa0-c0fb39e3aeb3)
+    (property "Sheetname" "Expansion Interface" (at 12.7 37.3884 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "pg09-system-expansion.kicad_sch" (at 12.7 53.9246 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "pg09-system"
+        (path "/44572023-3621-4b3a-bd53-c3b2b3f42871" (page "9"))
+      )
+    )
+  )
+
   (sheet_instances
     (path "/" (page "1"))
   )

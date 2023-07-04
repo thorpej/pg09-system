@@ -526,6 +526,10 @@
     [
       "91a9a724-fdbf-449f-802f-4b411bd73828",
       "Power Supply"
+    ],
+    [
+      "f2ee21e0-2cfa-4d23-9aa0-c0fb39e3aeb3",
+      "Expansion Interface"
     ]
   ],
   "text_variables": {}
