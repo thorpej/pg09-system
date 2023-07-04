@@ -92,7 +92,8 @@ action_list()
 action_program()
 {
 	# Explicitly erase the device first.
-	$minipro -p "$galtype" -E
+	# (XXX Don't actually need to do this ... -w does it, too.)
+	# $minipro -p "$galtype" -E
 
 	#
 	# At least on my GAL22V10D parts, I need to specify
