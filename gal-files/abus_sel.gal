@@ -1,0 +1,59 @@
+GAL22V10
+ABUSSEL
+
+BA  BS       RWB      A1      A2      A3   NC NC NC  NC    NC GND
+NC /HALTACK /SYNCACK /INTACK /NORMAL /aCPU NC NC NC /aINTC NC VCC
+
+;
+; 6809 states encoded bus Bus Available and Bus Status:
+;
+; BA     BS     State
+; -------------------
+;  0      0     Normal (running)
+;  0      1     Interrupt or Reset Acknowledge (vector fetch)
+;  1      0     Sync Acknowledge
+;  1      1     Halt Acknowledge
+;
+NORMAL  = /BA * /BS
+INTACK  = /BA *  BS
+SYNCACK =  BA * /BS
+HALTACK =  BA *  BS
+
+;
+; 6809 vector locations.  We can decode A1-A3 to figure out which one
+; is being fetched.
+;
+; $FFFE - $FFFF     Reset	[7]
+; $FFFC - $FFFD     NMI		[6]
+; $FFFA - $FFFB     SWI		[5]
+; $FFF8 - $FFF9     IRQ		[4]
+; $FFF6 - $FFF7     FIRQ	[3]
+; $FFF4 - $FFF5     SWI2	[2]
+; $FFF2 - $FFF3     SWI3	[1]
+; $FFF0 - $FFF1     Reserved	[0]
+;
+; We want the INTC to control the address bus when the IRQ vector is
+; being fetched.
+;
+; We want the CPU to control the address bus in all other circumstances.
+;
+aCPU  = /BA * /BS				; NORMAL
+      + /BA *  BS * /A3 * /A2 * /A1		; Reserved vector
+      + /BA *  BS * /A3 * /A2 *  A1		; SWI3 vector
+      + /BA *  BS * /A3 *  A2 * /A1		; SWI2 vector
+      + /BA *  BS * /A3 *  A2 *  A1		; FIRQ vector
+      + /BA *  BS *  A3 * /A2 * /A1 * /RWB	; IRQ vector (write)
+      + /BA *  BS *  A3 * /A2 *  A1		; SWI vector
+      + /BA *  BS *  A3 *  A2 * /A1		; NMI vector
+      + /BA *  BS *  A3 *  A2 *  A1		; RESET vector
+      + /BA *  BS *  A3 * /A2 * /A1 *  RWB	; temporary: IRQ vector (read)
+      +  BA * /BS				; SYNCACK
+      +  BA *  BS				; HALTACK
+
+;aINTC = /BA *  BS *  A3 * /A2 * /A1 *  RWB	; IRQ vector (read)
+aINTC = VCC					; temporary
+
+DESCRIPTION
+
+This selects the source of the address bus for a given bus transaction
+based on a variety of selection criteria.
