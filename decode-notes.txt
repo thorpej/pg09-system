@@ -9,13 +9,18 @@ RAM banker	(4)
 	LBRAM bank + HBRAM bank
 Int enables	(4)
 	0-7 + 8-15
-Int pending	(1)
+Int VBR		(2)
+	MSB + LSB
 
 Offset		A4	A3	A2	A1	A0
-$00		0	0	0	0	0	ROM banker
-$04		0	0	1	0	0	RAM banker
-$08		0	1	0	0	0	Int enables
-$0c		0	1	1	0	0	Int pending
+$00		0	0	0	0	0	ROM banker PIA
+...
+$04		0	0	1	0	0	RAM banker PIA
+...
+$08		0	1	0	0	0	Int enables PIA
+...
+$0c		0	1	1	0	0	Int VBR MSB |
+$0d		0	1	1	0	1	        LSB |
 
 
 UARTs: IO1SEL
