@@ -1,8 +1,8 @@
 GAL22V10
 INTMUX
 
-PHI2 L2   L1 L0 LA U2 U1 U0 UA CS0 CS1 GND
-/CS2 RWB  IP D7 D6 D5 D4 D3 D2 D1  D0  VCC
+PHI2 L2   L1  L0 LA U2 U1 U0 UA CS0 CS1 GND
+/CS2 RWB /IRQ D7 D6 D5 D4 D3 D2 D1  D0  VCC
 
 ;
 ; This is the second stage of a 16-IRQ priority-ecoding interrupt controller
@@ -15,9 +15,7 @@ PHI2 L2   L1 L0 LA U2 U1 U0 UA CS0 CS1 GND
 ; handlers, where each entry in the table is 2 bytes.
 ;
 ; It is essentially a mux with a special output case if neither of the
-; two inputs is active.  The IP (Interrupt Pending) output is active-high
-; with the intention that it drives the gate of an external small-signal
-; MOSFET to pull /IRQ down.
+; two inputs is active.
 ;
 ; It is designed to be paired with a 65C21 PIA to act as the interrupt
 ; enable registers (PA lower and PB upper).
@@ -52,11 +50,11 @@ PHI2 L2   L1 L0 LA U2 U1 U0 UA CS0 CS1 GND
 ; to keep things stable when the CPU is reading the mux.
 ;
 ; The function table doesn't list the output enables, but for all of
-; the Dn outputs, /CS0, /CS1, and RWB must all be asserted.  IP's output
+; the Dn outputs, /CS0, /CS1, and RWB must all be asserted.  IRQ's output
 ; is always enabled.
 ;
 
-IP.R  = LA + UA
+IRQ.R  = LA + UA
 
 /D7.R = LA + UA
 
