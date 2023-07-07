@@ -5,9 +5,9 @@
                           -------\___/-------
                        BA |  1           24 | VCC
                           |                 |
-                       BS |  2           23 | NC
+                       BS |  2           23 | /aINTC
                           |                 |
-                      RWB |  3           22 | /aINTC
+                      RWB |  3           22 | NC
                           |                 |
                        A1 |  4           21 | NC
                           |                 |
@@ -23,7 +23,7 @@
                           |                 |
                        NC | 10           15 | /SYNCACK
                           |                 |
-                       NC | 11           14 | /HALTACK
+                      IVV | 11           14 | /HALTACK
                           |                 |
                       GND | 12           13 | NC
                           -------------------

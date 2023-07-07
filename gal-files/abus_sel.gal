@@ -1,8 +1,8 @@
 GAL22V10
 ABUSSEL
 
-BA  BS       RWB      A1      A2      A3   NC NC NC  NC    NC GND
-NC /HALTACK /SYNCACK /INTACK /NORMAL /aCPU NC NC NC /aINTC NC VCC
+BA  BS       RWB      A1      A2      A3   NC NC NC NC  IVV   GND
+NC /HALTACK /SYNCACK /INTACK /NORMAL /aCPU NC NC NC NC /aINTC VCC
 
 ;
 ; 6809 states encoded bus Bus Available and Bus Status:
@@ -13,6 +13,9 @@ NC /HALTACK /SYNCACK /INTACK /NORMAL /aCPU NC NC NC /aINTC NC VCC
 ;  0      1     Interrupt or Reset Acknowledge (vector fetch)
 ;  1      0     Sync Acknowledge
 ;  1      1     Halt Acknowledge
+;
+; We don't really need these signals externally yet, but we have
+; spare outputs at the moment.
 ;
 NORMAL  = /BA * /BS
 INTACK  = /BA *  BS
@@ -33,25 +36,26 @@ HALTACK =  BA *  BS
 ; $FFF0 - $FFF1     Reserved	[0]
 ;
 ; We want the INTC to control the address bus when the IRQ vector is
-; being fetched.
+; being fetched.  N.B. we also need "INTC is in charge" and the vector
+; it provides to be stable for the entire vector fetch, which is 2
+; cycles, so it will need to latch its state on the rising edge of BS.
 ;
 ; We want the CPU to control the address bus in all other circumstances.
 ;
-aCPU  = /BA * /BS				; NORMAL
-      + /BA *  BS * /A3 * /A2 * /A1		; Reserved vector
-      + /BA *  BS * /A3 * /A2 *  A1		; SWI3 vector
-      + /BA *  BS * /A3 *  A2 * /A1		; SWI2 vector
-      + /BA *  BS * /A3 *  A2 *  A1		; FIRQ vector
-      + /BA *  BS *  A3 * /A2 * /A1 * /RWB	; IRQ vector (write)
-      + /BA *  BS *  A3 * /A2 *  A1		; SWI vector
-      + /BA *  BS *  A3 *  A2 * /A1		; NMI vector
-      + /BA *  BS *  A3 *  A2 *  A1		; RESET vector
-      + /BA *  BS *  A3 * /A2 * /A1 *  RWB	; temporary: IRQ vector (read)
-      +  BA * /BS				; SYNCACK
-      +  BA *  BS				; HALTACK
+aCPU  = /BA * /BS					; NORMAL
+      + /BA *  BS * /A3 * /A2 * /A1			; Reserved vector
+      + /BA *  BS * /A3 * /A2 *  A1			; SWI3
+      + /BA *  BS * /A3 *  A2 * /A1			; SWI2
+      + /BA *  BS * /A3 *  A2 *  A1			; FIRQ
+      + /BA *  BS *  A3 * /A2 * /A1 * /RWB		; IRQ (write)
+      + /BA *  BS *  A3 * /A2 * /A1 *  RWB * /IVV	; IRQ (read, not valid)
+      + /BA *  BS *  A3 * /A2 *  A1			; SWI
+      + /BA *  BS *  A3 *  A2 * /A1			; NMI
+      + /BA *  BS *  A3 *  A2 *  A1			; RESET
+      +  BA * /BS					; SYNCACK
+      +  BA *  BS					; HALTACK
 
-;aINTC = /BA *  BS *  A3 * /A2 * /A1 *  RWB	; IRQ vector (read)
-aINTC = VCC					; temporary
+aINTC = /BA *  BS *  A3 * /A2 * /A1 *  RWB *  IVV	; IRQ (read, valid)
 
 DESCRIPTION
 
