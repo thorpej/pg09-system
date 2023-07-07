@@ -1,24 +1,24 @@
 GAL22V10
 MEMINTF
 
-E  RW BA  BS       A1  A2 A3  A4  FLASHWREN NC     NC  GND
-NC NC NC /FLASHWR /RD /WR nA4 nA3 nA2       HALTED RWO VCC
+PHI2 RWB  A0       A1  A2 A3  A4  NC  NC  FLASHWREN NC  GND
+NC   NC  /FLASHWR /WR /RD nA4 nA3 nA2 nA1 nA0       RWO VCC
 
 ;
 ; Generate the /RD and /WR strobes.
 ;
-RD = E * RW
-WR = E * /RW
+RD = PHI2 *  RWB
+WR = PHI2 * /RWB
 
 ;
 ; Buffer the R/W signal from the CPU here.
 ;
-RWO = RW
+RWO = RWB
 
 ;
 ; Generate a flash-specific /WR strobe if flash writes are enabled.
 ;
-FLASHWR = E * /RW * FLASHWREN
+FLASHWR = PHI2 * /RWB * FLASHWREN
 
 ;
 ; A lot of chips have active-low and active-high chip-selects to faciliate
@@ -28,49 +28,13 @@ FLASHWR = E * /RW * FLASHWREN
 ; address line for their secondary chip-selects.  This saves us from having
 ; to plop random inverters all over the place.
 ;
+nA0 = /A0
+nA1 = /A1
 nA2 = /A2
 nA3 = /A3
 nA4 = /A4
 
-;
-; 6809 states encoded bus Bus Available and Bus Status:
-;
-; BA     BS     State
-; -------------------
-;  0      0     Normal (running)
-;  0      1     Interrupt or Reset Acknowledge (vector fetch)
-;  1      0     Sync Acknowledge
-;  1      1     Halt Acknowledge
-;
-
-;
-; Indicate if the 6809 is halted.
-;
-HALTED = BA * BS
-
-;
-; 6809 vector locations:
-;
-; $FFFE - $FFFF     Reset
-; $FFFC - $FFFD     NMI
-; $FFFA - $FFFB     SWI
-; $FFF8 - $FFF9     IRQ
-; $FFF6 - $FFF7     FIRQ
-; $FFF4 - $FFF5     SWI2
-; $FFF2 - $FFF3     SWI3
-; $FFF0 - $FFF1     Reserved
-;
-
-;
-; If a vector fetch is occuring, decode which one is being fetched
-; based on A1-A3.  We mainly care about IRQ and FIRQ; detecting those
-; would be necessary if we wish support auto-vectoring in the interrupt
-; controller.
-;
-;FIRQF = /BA * BS * /A3 *  A2 *  A1
-;IRQF  = /BA * BS *  A3 * /A2 * /A1
-
 DESCRIPTION
 
-This decodes bus state signals and generates other signals for the
-memory interface on the 6809 Playground computer.
+This generates signals for the memory interface on the 6809 Playground
+computer.
