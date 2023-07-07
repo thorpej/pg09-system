@@ -1,0 +1,124 @@
+GAL22V10
+INTMUXAV
+
+BS /aINTC L2 L1  L0  LA  U2 U1 U0 UA A0IN GND
+NC  NC    NC NC /IRQ IVV A4 A3 A2 A1 A0   VCC
+
+;
+; THIS IS THE AUTO-VECTORED VERSION.
+;
+; This is the second stage of a 16-IRQ priority-encoding interrupt controller
+; with individual interrupt enables.  This second stage multiplexes the two
+; first stages together to generate an IRQ number from 0-15, shifted left one
+; bit, to produce an offset into the aligned 32-byte table pointed to by the
+; IRQ Vector Base Register, which, when combined, places the address of the
+; IRQ Vector Table slot that holds the address of the handler for the current
+; interrupt, which the CPU will invoke directly when it fetches the IRQ vector.
+; We pass the CPU's A0 signal through for the 2-cycle fetch of the handler
+; address.
+;
+; It is designed to be paired with a 65C21 PIA to act as the interrupt
+; enable registers (PA lower and PB upper).
+;
+; Function table for the Address and /IRQ outputs:
+;
+; LA L2 L1 L0 UA U2 U1 U0   A4 A3 A2 A1 /IRQ
+;  L  x  x  x  L  x  x  x    L  L  L  L   H
+;  H  L  L  L  L  x  x  x    L  L  L  L   L
+;  H  L  L  H  L  x  x  x    L  L  L  H   L
+;  H  L  H  L  L  x  x  x    L  L  H  L   L
+;  H  L  H  H  L  x  x  x    L  L  H  H   L
+;  H  H  L  L  L  x  x  x    L  H  L  L   L
+;  H  H  L  H  L  x  x  x    L  H  L  H   L
+;  H  H  H  L  L  x  x  x    L  H  H  L   L
+;  H  H  H  H  L  x  x  x    L  H  H  H   L
+;  x  x  x  x  H  L  L  L    H  L  L  L   L
+;  x  x  x  x  H  L  L  H    H  L  L  H   L
+;  x  x  x  x  H  L  H  L    H  L  H  L   L
+;  x  x  x  x  H  L  H  H    H  L  H  H   L
+;  x  x  x  x  H  H  L  L    H  H  L  L   L
+;  x  x  x  x  H  H  L  H    H  H  L  H   L
+;  x  x  x  x  H  H  H  L    H  H  H  L   L
+;  x  x  x  x  H  H  H  H    H  H  H  H   L
+;
+; The table makes it look a lot more complicated than it is.  What it
+; really boils down to is: For each shifted output digit, select the
+; Ln value if UA is low and the Un value if UA is high (A4 simply follows
+; UA to add 0 or 8 to the selected encoder's IRQ number).  If both LA
+; and UA are low, then the digits will be zero.
+;
+; IVV (Interrupt Vector Valid) output needs to go high when we latch
+; the initial interrupt-pending state (when BS goes high) if IRQ is
+; asserted, and stay high until BS goes low.  We will use feedback from
+; IVV to achieve this.  IVV is used by the ABUSSEL to determine if
+; INTMUXAV should drive the address bus when fetching the IRQ vector
+; (otherwise it let's the CPU drive the address bus to fetch the default
+; IRQ vector).  It exists to provide some measure of protection against
+; spurious interrupts:
+;
+; 1- /IRQ is asserted
+; 2- CPU begins response, begins stacking registers
+; 3- /IRQ is de-asserted
+; 4- CPU finishes stacking registers, asserts BS to signal vector fetch.
+;
+; At this point, IVV will be low, which will cause ABUSSEL to NOT assert
+; aINTC and let the CPU drive the address bus to fetch the default IRQ
+; vector.
+;
+
+;
+; /IRQ is not registered because it would create an interesting chicken-
+; and-egg problem: /IRQ needs to be asserted in order for BS to go high,
+; but BS going high is what would push the /IRQ value through the D-FF.
+; Once the interrupt is triggered in the CPU, it doesn't really matter
+; what happens to our output signal here.
+;
+IRQ   = LA
+      + UA
+
+;
+; IVV is not registered because then it's status wouldn't change until
+; the next rising edge of BS, and we need it to fall when BS falls.
+; ABUSSEL will only act on IVV if the CPU is actually fetching the
+; IRQ vector.
+;
+; N.B. we gate IVV going high on A0IN being low in order to prevent it
+; going high in the middle of a vector fetch.
+;
+IVV   =  LA * BS * /A0IN ; On first vector byte fetch, goes high if ...
+      +  UA * BS * /A0IN ; ... an interrupt is pending ...
+      + IVV * BS	 ; ... and stays high until BS falls.
+
+;
+; Register the A1-A4 signals, which are latched on the rising edge of
+; BS.  This ensures that the vector table offset will be stable for the
+; duration of the vector fetch, no matter what happens to the input
+; signals.
+;
+A4.R  = UA
+
+A3.R  = LA * L2 * /UA
+      + UA * U2
+
+A2.R  = LA * L1 * /UA
+      + UA * U1
+
+A1.R  = LA * L0 * /UA
+      + UA * U0
+
+A0.T  = A0IN		; just follow A0IN (we're tri-stating it)
+
+;
+; Our outputs are enabled when ABUSSEL tells us to drive the address bus.
+;
+A4.E  = aINTC
+A3.E  = aINTC
+A2.E  = aINTC
+A1.E  = aINTC
+A0.E  = aINTC
+
+DESCRIPTION
+
+This is an auto-vectoring interrupt mux for the 6809 Playground computer.
+It needs to be combined with 2 74AHC374s that implemenent the IRQ Vector
+Base Register
