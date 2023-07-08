@@ -19,7 +19,7 @@ IRQ15 - expansion
 SYSTEM REGISTERS: IO0SEL
 
 ROM banker	(4)
-	BROM bank + extra I/O port
+	BROM bank + PSU controller interface
 RAM banker	(4)
 	LBRAM bank + HBRAM bank
 Int enables	(4)
