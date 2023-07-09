@@ -157,9 +157,12 @@ struct addr_decode_entry {
 };
 
 struct addr_decode_entry addr_decode_tab[] = {
+#if 0
   { .start = 0x0000,           .end = 0x7fff,           .chip_select = LBRAMSEL },
   { .start = 0x8000,           .end = 0x9bff,           .chip_select = FRAMSEL },
+#endif
   { .start = 0x9c00 + IOS(0),  .end = 0x9c00 + IOE(0),  .chip_select = IOSEL(0) },
+#if 0
   { .start = 0x9c00 + IOS(1),  .end = 0x9c00 + IOE(1),  .chip_select = IOSEL(1) },
   { .start = 0x9c00 + IOS(2),  .end = 0x9c00 + IOE(2),  .chip_select = IOSEL(2) },
   { .start = 0x9c00 + IOS(3),  .end = 0x9c00 + IOE(3),  .chip_select = IOSEL(3) },
@@ -194,6 +197,7 @@ struct addr_decode_entry addr_decode_tab[] = {
   { .start = 0xa000,           .end = 0xbfff,           .chip_select = HBRAMSEL },
   { .start = 0xc000,           .end = 0xdfff,           .chip_select = BROMSEL },
   { .start = 0xe000,           .end = 0xffff,           .chip_select = FROMSEL },
+#endif
   { .start = 0,                .end = 0 },
 };
 
@@ -217,10 +221,24 @@ extern "C" {
   }
 }
 
+static void
+wait_return_key(void)
+{
+  int i;
+
+  do {
+    i = Serial.read();
+  } while (i != '\r' && i != '\r\n');
+}
+
 bool
 signal_is_active(const struct signal_desc *s)
 {
   bool active = digitalRead(s->pin);
+  Serial.print("signal_is_active: ");
+  Serial.print(s->name);
+  Serial.print(" -> ");
+  Serial.println(active);
   if (s->name[0] == '/') {
     /* Invert active-low signals. */
     active = !active;
@@ -239,7 +257,7 @@ init_pins(void)
   }
 
   for (i = 0; i < signal_map_count; i++) {
-    pinMode(signal_map[i].pin, INPUT);
+    pinMode(signal_map[i].pin, INPUT_PULLUP);
   }
 }
 
@@ -352,9 +370,7 @@ loop()
 
   tla_printf("6809 Playground address decoder tester.\r\n");
   tla_printf("Press <RETURN> to perform the test...\r\n");
-  do {
-    i = Serial.read();
-  } while (i != '\r' && i != '\r\n');
+  wait_return_key();
 
   addresses_tested = 0;
   error_count = 0;
@@ -368,6 +384,7 @@ loop()
          address <= addr_decode_tab[i].end;
          address += (1 << ADDR_SHIFT)) {
       set_address((uint16_t)address);
+      tla_printf("XXXJRT: waiting...\r\n"); wait_return_key();
       if (check_all_selects(addr_decode_tab[i].chip_select)) {
         /* Break out of this section if an error occurs. */
         break;
