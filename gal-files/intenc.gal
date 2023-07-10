@@ -7,7 +7,7 @@ INTENC
 ;
 ; This is the first stage a 16-IRQ priority-encoding interrupt controller
 ; with individual interrupt enables.  This first stage performs an 8-to-3
-; (4-2-1) priority encoding, where 7 is the higest proirity and 0 is the
+; (4-2-1) priority encoding, where 7 is the higest priority and 0 is the
 ; lowest.
 ;
 ; If any of the IRQ inputs is active, then the ACT signal is asserted.  This
