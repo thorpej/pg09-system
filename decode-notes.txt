@@ -26,6 +26,8 @@ Int enables	(4)
 	0-7 + 8-15
 Int VBR		(2)
 	MSB + LSB
+[unused]	(2)
+Clock Speed	(1)
 
 Offset		A4	A3	A2	A1	A0
 $00		0	0	0	0	0	ROM banker PIA
@@ -36,6 +38,7 @@ $08		0	1	0	0	0	Int enables PIA
 ...
 $0c		0	1	1	0	0	Int VBR MSB |
 $0d		0	1	1	0	1	        LSB |
+$10		1	0	0	0	0	Clock Speed
 
 
 UARTs: IO1SEL
