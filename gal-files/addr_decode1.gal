@@ -5,29 +5,31 @@ A5  A6    A7     A8   A9   A10   A11   A12   A13   A14   A15  GND
 NC /FRAM /HBRAM /IO8 /IO9 /IO10 /IO11 /IO12 /IO13 /IO14 /IO15 VCC
 
 ;
-; Decodes Bank #1 (8-15) of the 32 32-byte I/O device selects.
+; Decodes Bank #1 (8-15) of the 16 32-byte I/O device selects.
 ;
-;        |----------- I/O region --------|     | Bnk |     | - Device -|
-;        1      0      0     1     1     1     0     1     x     x     x
-IO8  = A15 * /A14 * /A13 * A12 * A11 * A10 * /A9 *  A8 * /A7 * /A6 * /A5
-IO9  = A15 * /A14 * /A13 * A12 * A11 * A10 * /A9 *  A8 * /A7 * /A6 *  A5
-IO10 = A15 * /A14 * /A13 * A12 * A11 * A10 * /A9 *  A8 * /A7 *  A6 * /A5
-IO11 = A15 * /A14 * /A13 * A12 * A11 * A10 * /A9 *  A8 * /A7 *  A6 *  A5
-IO12 = A15 * /A14 * /A13 * A12 * A11 * A10 * /A9 *  A8 *  A7 * /A6 * /A5
-IO13 = A15 * /A14 * /A13 * A12 * A11 * A10 * /A9 *  A8 *  A7 * /A6 *  A5
-IO14 = A15 * /A14 * /A13 * A12 * A11 * A10 * /A9 *  A8 *  A7 *  A6 * /A5
-IO15 = A15 * /A14 * /A13 * A12 * A11 * A10 * /A9 *  A8 *  A7 *  A6 *  A5
+;        |------------ I/O region ------------|   Bank    | - Device -|
+;        1      0      0     1     1     1    1     1     x     x     x
+IO8  = A15 * /A14 * /A13 * A12 * A11 * A10 * A9 *  A8 * /A7 * /A6 * /A5
+IO9  = A15 * /A14 * /A13 * A12 * A11 * A10 * A9 *  A8 * /A7 * /A6 *  A5
+IO10 = A15 * /A14 * /A13 * A12 * A11 * A10 * A9 *  A8 * /A7 *  A6 * /A5
+IO11 = A15 * /A14 * /A13 * A12 * A11 * A10 * A9 *  A8 * /A7 *  A6 *  A5
+IO12 = A15 * /A14 * /A13 * A12 * A11 * A10 * A9 *  A8 *  A7 * /A6 * /A5
+IO13 = A15 * /A14 * /A13 * A12 * A11 * A10 * A9 *  A8 *  A7 * /A6 *  A5
+IO14 = A15 * /A14 * /A13 * A12 * A11 * A10 * A9 *  A8 *  A7 *  A6 * /A5
+IO15 = A15 * /A14 * /A13 * A12 * A11 * A10 * A9 *  A8 *  A7 *  A6 *  A5
 
 ;
 ; Decode fixed RAM.
 ;
-;        |------------ Fixed RAM -----------|
-;        1      0      0      0      x      x
-;  -OR-  1      0      0      1      0      x
-;  -OR-  1      0      0      1      1      0
+;        |--------------- Fixed RAM ---------------|
+;        1      0      0      0      x      x      x
+;  -OR-  1      0      0      1      0      x      x
+;  -OR-  1      0      0      1      1      0      x
+;  -OR-  1      0      0      1      1      1      0
 FRAM = A15 * /A14 * /A13 * /A12
      + A15 * /A14 * /A13 *  A12 * /A11
      + A15 * /A14 * /A13 *  A12 *  A11 * /A10
+     + A15 * /A14 * /A13 *  A12 *  A11 *  A10 * /A9
 
 ;
 ; Decodes high banked RAM.
