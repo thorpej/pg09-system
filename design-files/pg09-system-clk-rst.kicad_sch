@@ -1522,7 +1522,7 @@
     (property "Reference" "SW201" (at 101.6 161.0192 0)
       (effects (font (size 1.27 1.27)))
     )
-    (property "Value" "SW_Push" (at 101.6 163.5561 0)
+    (property "Value" "Reset" (at 101.6 163.5561 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Footprint" "Button_Switch_THT:SW_PUSH_6mm" (at 101.6 162.56 0)
