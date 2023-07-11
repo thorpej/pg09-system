@@ -1235,7 +1235,7 @@
     (property "Reference" "SW201" (at 188.595 125.4592 0)
       (effects (font (size 1.27 1.27)))
     )
-    (property "Value" "SW_Push" (at 188.595 127.9961 0)
+    (property "Value" "Power" (at 188.595 127.9961 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Footprint" "Button_Switch_THT:SW_PUSH_6mm" (at 188.595 127 0)
