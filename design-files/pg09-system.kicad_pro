@@ -466,6 +466,10 @@
       {
         "netclass": "Power",
         "pattern": "+5VSB"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "+3V3"
       }
     ]
   },
