@@ -4394,6 +4394,26 @@
     )
   )
 
+  (sheet (at 312.42 16.51) (size 40.005 15.24) (fields_autoplaced)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0000))
+    (uuid a9e9ad98-9eec-45f2-8e38-6db75be52ef6)
+    (property "Sheetname" "SPI SD Card Interface" (at 312.42 15.7984 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "pg09-system-spi-sdcard.kicad_sch" (at 312.42 32.3346 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (property "Field2" "" (at 312.42 16.51 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (instances
+      (project "pg09-system"
+        (path "/44572023-3621-4b3a-bd53-c3b2b3f42871" (page "10"))
+      )
+    )
+  )
+
   (sheet (at 201.93 16.51) (size 34.29 15.24) (fields_autoplaced)
     (stroke (width 0.1524) (type solid))
     (fill (color 0 0 0 0.0000))

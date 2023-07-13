@@ -564,6 +564,10 @@
     [
       "f2ee21e0-2cfa-4d23-9aa0-c0fb39e3aeb3",
       "Expansion Interface"
+    ],
+    [
+      "a9e9ad98-9eec-45f2-8e38-6db75be52ef6",
+      "SPI SD Card Interface"
     ]
   ],
   "text_variables": {}

@@ -49,3 +49,10 @@ ACIA		(4)
 Offset		A4	A3	A2	A1	A0
 $00		0	0	0	0	0	ACIA
 $08		0	1	0	0	0	16550
+
+
+SD Card / SPI: IO2SEL
+Offset		A4	A3	A2	A1	A0	VIA
+$00		0	0	0	0	0
+..
+$10
