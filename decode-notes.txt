@@ -1,8 +1,8 @@
 IRQ assignments (super preliminary):
-IRQ0 - video
+IRQ0 - SD Card
 IRQ1 - reserved
 IRQ2 - reserved
-IRQ3 - keyboard
+IRQ3 - reserved
 IRQ4 - expansion
 IRQ5 - expansion
 IRQ6 - expansion
@@ -11,10 +11,10 @@ IRQ8 - expansion
 IRQ9 - expansion
 IRQ10 - expansion
 IRQ11 - expansion
-IRQ12 - expansion
+IRQ12 - keyboard
 IRQ13 - expansion
 IRQ14 - expansion
-IRQ15 - expansion
+IRQ15 - video
 
 SYSTEM REGISTERS: IO0SEL
 
