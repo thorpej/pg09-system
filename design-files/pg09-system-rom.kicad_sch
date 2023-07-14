@@ -1662,7 +1662,7 @@
     (property "Value" "AT28C64" (at 153.0859 26.67 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "Socket:DIP_Socket-28_W6.9_W7.62_W10.16_W12.7_W13.5_3M_228-4817-00-0602J" (at 151.13 22.86 0)
+    (property "Footprint" "Socket:DIP_Socket-28_W11.9_W12.7_W15.24_W17.78_W18.5_3M_228-1277-00-0602J" (at 151.13 22.86 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "" (at 151.13 22.86 0)
