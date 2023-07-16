@@ -16,32 +16,32 @@ NC   CLKOUT  NC     D7      D6        D5       D4      D3  D2   D1  D0  VCC
 ; Function table for CLKOUT:
 ;
 ; CLKIN16 CLKIN8 CLKIN4 CLKSEL16 CLKSEL8 CLKSEL4     CLKOUT
-;       x      x      x        H       H       H          L
-;       x      x      x        L       L       x          L
-;       x      x      x        x       L       L          L
-;       x      x      x        L       x       L          L
-;       H      x      x        L       H       H          H
-;       L      x      x        L       H       H          L
-;       x      H      x        H       L       H          H
-;       x      L      x        H       L       H          L
-;       x      x      H        H       H       L          H
-;       x      x      L        H       H       L          L
+;       x      x      x        F       F       F          L
+;       x      x      x        x       T       T          L
+;       x      x      x        T       x       T          L
+;       x      x      x        T       T       x          L
+;       x      x      L        F       F       T          L
+;       x      x      H        F       F       T          H
+;       x      L      x        F       T       F          L
+;       x      H      x        F       T       F          H
+;       L      x      x        T       F       F          L
+;       H      x      x        T       F       F          H
 ;
-CLKOUT = CLKIN16 *  CLKSEL16 * /CLKSEL8 * /CLKSEL4
+CLKOUT = CLKIN4  * /CLKSEL16 * /CLKSEL8 *  CLKSEL4
        + CLKIN8  * /CLKSEL16 *  CLKSEL8 * /CLKSEL4
-       + CLKIN4  * /CLKSEL16 * /CLKSEL8 *  CLKSEL4
+       + CLKIN16 *  CLKSEL16 * /CLKSEL8 * /CLKSEL4
 
 ;
 ; Function table for clock speed register:
 ;
 ; CLKSEL16 CLKSEL8 CLKSEL4     D7 D6 D5 D4 D3 D2 D1 D0
-;        H       H       H      L  L  L  L  L  L  L  L
-;        L       L       x      L  L  L  L  L  L  L  L
-;        x       L       L      L  L  L  L  L  L  L  L
-;        L       x       L      L  L  L  L  L  L  L  L
-;        H       H       L      L  L  L  L  L  L  L  H
-;        H       L       H      L  L  L  L  L  L  H  L
-;        L       H       H      L  L  L  L  L  H  L  L
+;        F       F       F      L  L  L  L  L  L  L  L
+;        x       T       T      L  L  L  L  L  L  L  L
+;        T       x       T      L  L  L  L  L  L  L  L
+;        T       T       x      L  L  L  L  L  L  L  L
+;        F       F       T      L  L  L  L  L  L  L  H
+;        F       T       F      L  L  L  L  L  L  H  L
+;        T       F       F      L  L  L  L  L  H  L  L
 ;
 D7.T = GND
 D6.T = GND
