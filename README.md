@@ -10,7 +10,7 @@ The whole point of this exercise is to learn-by-doing and have fun in the
 process.  I have a few ideas about how I want the project to go, but it
 may veer this way or that as it progresses.  We'll see!
 
-I invite you to follow along with this [YouTube playlist:](https://youtube.com/playlist?list=PL_E3Je1H0xrvq1AOL1zlwj3LmrBiK8FJb).  As each
+I invite you to follow along with this [YouTube playlist](https://youtube.com/playlist?list=PL_E3Je1H0xrvq1AOL1zlwj3LmrBiK8FJb).  As each
 installment is posted, this README will be updated with additional information
 about the that installment, including links to data sheets and a parts list.
 
