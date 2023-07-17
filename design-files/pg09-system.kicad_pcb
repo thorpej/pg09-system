@@ -15349,6 +15349,8 @@
     (stroke (width 0.15) (type default)) (layer "F.SilkS") (tstamp 384ce818-a56c-4442-993f-96b6d7c6fc4b))
   (gr_line (start 267.5558 314.927) (end 296.7658 314.927)
     (stroke (width 0.15) (type default)) (layer "F.SilkS") (tstamp 951bc84f-ba04-4b20-b4a9-ff978b5ac782))
+  (gr_rect (start 382.27 89.662) (end 396.494 102.87)
+    (stroke (width 0.15) (type default)) (fill none) (layer "Dwgs.User") (tstamp 25441a69-c940-4560-80b1-cac89f212ba3))
   (gr_rect (start 136.341 89.629) (end 442.341 333.629)
     (stroke (width 0.1) (type default)) (fill none) (layer "Edge.Cuts") (tstamp 7eedf35b-e181-4a9e-90d9-be82d1f83b92))
   (gr_rect (start 241.808 89.662) (end 267.208 121.412)
