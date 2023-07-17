@@ -4580,6 +4580,23 @@
     )
   )
 
+  (sheet (at 354.076 16.51) (size 32.512 15.24) (fields_autoplaced)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0000))
+    (uuid 2aac33c7-62da-4c06-b1d4-3434ee198b44)
+    (property "Sheetname" "Human Interface Devices" (at 354.076 15.7984 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "pg09-system-hid.kicad_sch" (at 354.076 32.3346 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "pg09-system"
+        (path "/44572023-3621-4b3a-bd53-c3b2b3f42871" (page "11"))
+      )
+    )
+  )
+
   (sheet (at 12.7 16.51) (size 36.83 15.24) (fields_autoplaced)
     (stroke (width 0.1524) (type solid))
     (fill (color 0 0 0 0.0000))
