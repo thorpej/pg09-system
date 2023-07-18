@@ -3,27 +3,27 @@
                                 GAL22V10
 
                           -------\___/-------
-                     PHI2 |  1           24 | VCC
+                       NC |  1           24 | VCC
                           |                 |
-                  CLKIN16 |  2           23 | D0
+                  CLKIN16 |  2           23 | CLKOUT
                           |                 |
-                   CLKIN8 |  3           22 | D1
+                   CLKIN8 |  3           22 | NC
                           |                 |
-                   CLKIN4 |  4           21 | D2
+                   CLKIN4 |  4           21 | D0
                           |                 |
-                /CLKSEL16 |  5           20 | D3
+                /CLKSEL16 |  5           20 | D1
                           |                 |
-                 /CLKSEL8 |  6           19 | D4
+                 /CLKSEL8 |  6           19 | D2
                           |                 |
-                 /CLKSEL4 |  7           18 | D5
+                 /CLKSEL4 |  7           18 | D3
                           |                 |
-                      CS0 |  8           17 | D6
+                      CS0 |  8           17 | D4
                           |                 |
-                      CS1 |  9           16 | D7
+                      CS1 |  9           16 | D5
                           |                 |
-                     /CS2 | 10           15 | NC
+                     /CS2 | 10           15 | D6
                           |                 |
-                      RWB | 11           14 | CLKOUT
+                      RWB | 11           14 | D7
                           |                 |
-                      GND | 12           13 | NC
+                      GND | 12           13 | PHI2
                           -------------------
