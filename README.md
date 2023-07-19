@@ -24,3 +24,17 @@ In the first installment, I briefly introduce the project and provide some
 background.
 
 Video link: [01 - Introduction](https://youtu.be/d_VZdUXh_dU)
+
+## 02 - Clock Generator
+
+In the second installment, I describe the design and implementation of
+the clock generator circuitry.
+
+Major components:
+* [74ACT163](https://www.ti.com/lit/ds/symlink/cd74act163.pdf) binary counter
+* [74ACT109](https://www.ti.com/lit/ds/symlink/cd74act109.pdf) dual J-/K flip-flop
+* [Lattice GAL22V10](https://web.mit.edu/6.115/www/document/gal22v10.pdf) or
+  [Atmel ATF22V10](https://www.mouser.com/datasheet/2/268/doc0735-1369018.pdf)
+  electrically-eraseable programmable logic device
+
+Video link: [02 - Clock Generator](https://youtu.be/Hb_b3B4GNCY)
