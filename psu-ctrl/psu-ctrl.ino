@@ -61,6 +61,7 @@
 #include <avr/power.h>
 #include <avr/sleep.h>
 
+// #define CONFIG_ATTINY
 #define DEBUG
 
 #define POWER_BUTTON_PIN    2   /* uses interrupt */
@@ -95,6 +96,7 @@
 #define STATE_ON_BUTTON_DOWN_LAST   STATE_ON_BUTTON_DOWN(BUTTON_DOWN_STATES - 1)
 #define STATE_POWER_OFF             (STATE_ON_BUTTON_DOWN_LAST + 1)
 
+#if !defined(CONFIG_ATTINY)
 static const char *
 state_name(int s)
 {
@@ -115,6 +117,7 @@ state_name(int s)
       return "???";
   }
 }
+#endif /* ! CONFIG_ATTINY */
 
 static volatile bool button_edge_detected;
 static volatile bool host_req_edge_detected;
@@ -128,6 +131,7 @@ static int state;
 static void
 print_state(int s, bool brackets)
 {
+#if !defined(CONFIG_ATTINY)
   if (Serial && s != STATE_INITIAL) {
     if (brackets) {
       Serial.print("[");
@@ -137,6 +141,7 @@ print_state(int s, bool brackets)
       Serial.print("] ");
     }
   }
+#endif /* ! CONFIG_ATTINY */
 }
 
 static bool
@@ -145,8 +150,9 @@ print_current_state(void)
   print_state(state, true);
 }
 
+#if !defined(CONFIG_ATTINY)
 static void
-Info(const char *str)
+Info_internal(const char *str)
 {
   if (Serial) {
     print_current_state();
@@ -154,7 +160,12 @@ Info(const char *str)
   }
 }
 
-#ifdef DEBUG
+#define Info(x)   Info_internal(x)
+#else
+#define Info(x)   /* nothing */
+#endif /* ! CONFIG_ATTINY */
+
+#if defined(DEBUG) && !defined(CONFIG_ATTINY)
 static void
 Debug_internal(const char *str)
 {
@@ -168,7 +179,7 @@ Debug_internal(const char *str)
 #define Debug(x)  Debug_internal(x)
 #else
 #define Debug(x)  /* nothing */
-#endif
+#endif /* DEBUG && ! CONFIG_ATTINY */
 
 /*
  * set_power_led --
@@ -320,10 +331,12 @@ host_req_isr(void)
       (digitalRead(HOST_REQ_BIT1_PIN) ? 0x02 : 0);
 }
 
-#ifdef SLEEP_MODE_PWR_SAVE
+#if defined(SLEEP_MODE_PWR_SAVE)
 #define SNOOZE_MODE       SLEEP_MODE_PWR_SAVE
-#else
+#elif defined(SLEEP_MODE_PWR_IDLE)
 #define SNOOZE_MODE       SLEEP_MODE_PWR_IDLE
+#elif defined(SLEEP_MODE_IDLE)
+#define SNOOZE_MODE       SLEEP_MODE_IDLE
 #endif
 
 /*
@@ -458,7 +471,9 @@ state_recover(void)
 void
 setup(void)
 {
+#if !defined(CONFIG_ATTINY)
   Serial.begin(115200);
+#endif /* ! CONFIG_ATTINY */
 
   Info("");
   Info(">>> 6809 Playground PSU controller " VERSION);
@@ -490,8 +505,10 @@ setup(void)
   /* power down a bunch of microcontroller blocks we don't need. */
   Info("Disabling unneeded functional blocks.");
   power_adc_disable();
+#ifndef CONFIG_ATTINY
   power_spi_disable();
   power_twi_disable();
+#endif
 
   /* And we're off! */
   state = STATE_OFF;
@@ -534,12 +551,14 @@ loop(void)
       break;
   }
   if (next_state != STATE_no_change) {
+#if !defined(CONFIG_ATTINY)
     if (Serial && !quiet_state_change(next_state)) {
       print_current_state();
       Serial.print("New state -> ");
       print_state(next_state, false);
       Serial.println("");
     }
+#endif /* CONFIG_ATTINY */
     state = next_state;
   }
 }
