@@ -38,3 +38,12 @@ Major components:
   electrically-eraseable programmable logic device
 
 Video link: [02 - Clock Generator](https://youtu.be/Hb_b3B4GNCY)
+
+## 03 - Reset Generator
+
+This the third installment, I describe how the reset generator works.
+
+Major components:
+* [Dallas Semiconductor DS1813](https://www.mouser.com/datasheet/2/609/DS1813-3122044.pdf)
+
+Video link: [03 - Reset Generator](https://youtu.be/o6EI-TFBSVA)
