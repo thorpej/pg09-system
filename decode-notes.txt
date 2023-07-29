@@ -44,10 +44,12 @@ $10		1	0	0	0	0	Clock Speed
 UARTs: IO1SEL
 
 ACIA		(4)
+[reserved]	(4)
 16550		(8)
 
 Offset		A4	A3	A2	A1	A0
 $00		0	0	0	0	0	ACIA
+$04		0	0	1	0	0	[reserved]
 $08		0	1	0	0	0	16550
 
 
