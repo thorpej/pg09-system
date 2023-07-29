@@ -1092,7 +1092,6 @@
   (no_connect (at 99.06 35.56) (uuid 1e1ea94e-e76f-4078-a0ae-9e6ff9e5641f))
   (no_connect (at 111.76 162.56) (uuid 1f905758-ecbb-430b-9c59-bee67fe8a5fa))
   (no_connect (at 60.96 160.02) (uuid 26438dbe-35b8-4f81-8286-7433ab13db7a))
-  (no_connect (at 99.06 33.02) (uuid 2d797cc9-0333-4556-aa10-3a90c7c08030))
   (no_connect (at 203.2 52.07) (uuid 2dea8f3a-e3fd-4200-8170-bf3fdf7a1ae6))
   (no_connect (at 203.2 69.85) (uuid 2f5ba372-4602-4972-99cd-8e9ed1b47e25))
   (no_connect (at 203.2 67.31) (uuid 36eaef5b-eb17-43db-9fb0-1d64ec6394ab))
@@ -1844,6 +1843,31 @@
       (project "pg09-system"
         (path "/44572023-3621-4b3a-bd53-c3b2b3f42871/ac00d1d6-4857-42f9-90e1-ab396f3828b3"
           (reference "#PWR0707") (unit 1)
+        )
+      )
+    )
+  )
+
+  (symbol (lib_id "power:GND") (at 99.06 33.02 90) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
+    (uuid 48c82fdc-2f37-4585-a828-430689f4678f)
+    (property "Reference" "#PWR0719" (at 105.41 33.02 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Value" "GND" (at 102.87 33.655 90)
+      (effects (font (size 1.27 1.27)) (justify right))
+    )
+    (property "Footprint" "" (at 99.06 33.02 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "" (at 99.06 33.02 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid ce401c50-9286-40f2-82e0-291065d37e57))
+    (instances
+      (project "pg09-system"
+        (path "/44572023-3621-4b3a-bd53-c3b2b3f42871/ac00d1d6-4857-42f9-90e1-ab396f3828b3"
+          (reference "#PWR0719") (unit 1)
         )
       )
     )
