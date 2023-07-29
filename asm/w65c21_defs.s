@@ -44,7 +44,7 @@ PIA_CRx_Cx1_NE_DIS	equ	(0 << 0) ; IRQ1 negative edge (disabled)
 PIA_CRx_Cx1_NE		equ	(1 << 0) ; IRQ1 negative edge (enabled)
 PIA_CRx_Cx1_PE_DIS	equ	(2 << 0) ; IRQ1 positive edge (disabled)
 PIA_CRx_Cx1_PE		equ	(3 << 0) ; IRQ1 positive edge (enabled)
-PIA_CRx_DDR_ACCESS	equ	(1 << 2) ; Data Direction Register access
+PIA_CRx_DDR_PI		equ	(1 << 2) ; 0 -> DDR access, 1 -> Peripheral
 PIA_CRx_Cx2_NE_DIS	equ	(0 << 3) ; IRQ2 negative edge (disabled)
 PIA_CRx_Cx2_NE		equ	(1 << 3) ; IRQ2 negative edge (enabled)
 PIA_CRx_Cx2_PE_DIS	equ	(2 << 3) ; IRQ2 positive edge (disabled)
