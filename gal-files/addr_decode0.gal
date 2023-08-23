@@ -34,4 +34,4 @@ FROM = A15 *  A14 *  A13
 
 DESCRIPTION
 
-This is part (#0) of the address decoder for the 6809 Playground computer.
+This is part (1/2) of the address decoder for the 6809 Playground computer.
