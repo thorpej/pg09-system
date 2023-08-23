@@ -23,10 +23,10 @@ FLASHWR = PHI2 * /RWB * FLASHWREN
 ;
 ; A lot of chips have active-low and active-high chip-selects to faciliate
 ; additional address decoding options.  Examples are the 65C21, 65C22,
-; 65C51, and 16550.  So we provide inverted copies of A2, A3, and A4 for
-; clusters of chips that want to share the same IOxSEL, and use another
-; address line for their secondary chip-selects.  This saves us from having
-; to plop random inverters all over the place.
+; 65C51, and 16550.  So we provide inverted copies of A0-A4 for clusters
+; of chips that want to share the same IOxSEL, and use another address line
+; for their secondary chip-selects.  This saves us from having to plop random
+; inverters all over the place.
 ;
 nA0 = /A0
 nA1 = /A1
