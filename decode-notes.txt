@@ -18,10 +18,10 @@ IRQ15 - video
 
 SYSTEM REGISTERS: IO0SEL
 
-ROM banker	(4)
-	BROM bank
-RAM banker	(4)
-	LBRAM bank + HBRAM bank
+Low Banker	(4)
+	LBRAM0 bank + LBRAM1 bank
+High Banker	(4)
+	HBRAM bank + BROM bank
 Int enables	(4)
 	0-7 + 8-15
 Int VBR		(2)
@@ -31,9 +31,9 @@ Clock Speed	(1)
 PSU controller	(1)
 
 Offset		A4	A3	A2	A1	A0
-$00		0	0	0	0	0	ROM banker PIA
+$00		0	0	0	0	0	Low Banker PIA
 ...
-$04		0	0	1	0	0	RAM banker PIA
+$04		0	0	1	0	0	High Banker PIA
 ...
 $08		0	1	0	0	0	Int enables PIA
 ...
