@@ -2621,7 +2621,7 @@
   (symbol (lib_id "74xx:74LS139") (at 33.782 156.972 0) (unit 3)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 1900b428-2165-4a5f-ab76-8ca5bf9cf623)
-    (property "Reference" "U603" (at 35.052 145.034 0)
+    (property "Reference" "U601" (at 35.052 145.034 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "74AHC139" (at 35.052 147.574 0)
@@ -2652,7 +2652,7 @@
     (instances
       (project "pg09-system"
         (path "/44572023-3621-4b3a-bd53-c3b2b3f42871/c22548cb-3a32-4ecf-b2c4-e43fd96dc369"
-          (reference "U603") (unit 3)
+          (reference "U601") (unit 3)
         )
       )
     )
@@ -2689,7 +2689,7 @@
   (symbol (lib_id "Memory_RAM:AS6C4008-55PCN") (at 144.78 46.99 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 383620ff-f385-487b-8023-0fec52986f4e)
-    (property "Reference" "U604" (at 146.7359 17.78 0)
+    (property "Reference" "U603" (at 146.7359 17.78 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "AS6C4008-55PCN" (at 146.7359 20.32 0)
@@ -2736,7 +2736,7 @@
     (instances
       (project "pg09-system"
         (path "/44572023-3621-4b3a-bd53-c3b2b3f42871/c22548cb-3a32-4ecf-b2c4-e43fd96dc369"
-          (reference "U604") (unit 1)
+          (reference "U603") (unit 1)
         )
       )
     )
@@ -2801,7 +2801,7 @@
   (symbol (lib_id "74xx:74LS139") (at 83.82 120.65 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 5008e962-ec92-44a1-a9a5-28685b80d7f8)
-    (property "Reference" "U603" (at 79.502 111.506 0)
+    (property "Reference" "U601" (at 79.502 111.506 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "74AHC139" (at 79.502 114.046 0)
@@ -2813,26 +2813,26 @@
     (property "Datasheet" "http://www.ti.com/lit/ds/symlink/sn74ls139a.pdf" (at 83.82 120.65 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (pin "1" (uuid 7e81e5ef-9301-4346-bdb8-0be5f4f953bf))
-    (pin "2" (uuid 5044f553-bd4d-4c57-9ede-73e13c53207e))
-    (pin "3" (uuid 17f996d9-5fcc-4293-bda3-4f23d8b1ed87))
-    (pin "4" (uuid 417c01ef-8ed9-444e-9c62-80d4d188fe03))
-    (pin "5" (uuid 9496f46a-b4eb-4c8d-8ab8-b46c72f92ae7))
-    (pin "6" (uuid 68f2c239-9ca9-406b-aaa3-9f9284971b27))
-    (pin "7" (uuid bc5bf430-dcdd-466f-8b7a-088559404b18))
-    (pin "10" (uuid b773ae18-c806-49ff-9a68-74624f31cd18))
-    (pin "11" (uuid 9f8832ab-b91d-44c9-ae63-70a84aa41850))
-    (pin "12" (uuid d1f771ec-65ea-4e29-a9b2-7c2ff3d31595))
-    (pin "13" (uuid b2f9ff2b-f290-4bf1-bf62-fa577208a266))
-    (pin "14" (uuid a7b702fc-6aae-4290-894c-4e567e3ed7e0))
-    (pin "15" (uuid d2132296-6ff7-4347-b368-dfe65eb21ce0))
-    (pin "9" (uuid ca55cf7a-f5c9-4791-8614-d145cf94f007))
-    (pin "16" (uuid b7af1405-4157-4dcf-8937-919c2ecb1312))
-    (pin "8" (uuid 071a38ee-df5f-4cd2-b285-f92fb4d92d4e))
+    (pin "1" (uuid 85b01371-7e9f-485e-a8cb-aa7f90600e7b))
+    (pin "2" (uuid 45779d2e-de4d-46a2-b5f7-44b524a9ccd0))
+    (pin "3" (uuid 45a28ed0-7bb0-40a7-a03d-702abdb4b91c))
+    (pin "4" (uuid 8615d1f0-933c-428b-8ef8-7687af7a03ba))
+    (pin "5" (uuid b829ae9a-2a2c-4126-98be-d4242b034a3a))
+    (pin "6" (uuid 46097f0c-0686-41e4-a6f9-90e10314d905))
+    (pin "7" (uuid e9670738-e072-40b1-b32c-55634c657e8b))
+    (pin "10" (uuid fc78ad42-16b6-4f7e-88a0-65672867e577))
+    (pin "11" (uuid b5036d57-ac79-4f05-bb04-c5b548cea1cb))
+    (pin "12" (uuid b6252172-4e42-43c8-8983-8da08c8d5ae9))
+    (pin "13" (uuid fb67994d-709c-40f2-a04a-892545c0ba57))
+    (pin "14" (uuid 42551c36-378a-4d3f-97b7-a828657ff1d3))
+    (pin "15" (uuid 039e2705-e50e-4a0f-b6bd-15622aba614d))
+    (pin "9" (uuid 884b7bb9-87b6-4764-9979-19835f1638d1))
+    (pin "16" (uuid 3e153109-8ee3-43dd-b5c4-81034734573a))
+    (pin "8" (uuid 68c52391-5bee-4add-8e30-bf95746ab9cb))
     (instances
       (project "pg09-system"
         (path "/44572023-3621-4b3a-bd53-c3b2b3f42871/c22548cb-3a32-4ecf-b2c4-e43fd96dc369"
-          (reference "U603") (unit 1)
+          (reference "U601") (unit 1)
         )
       )
     )
@@ -2841,7 +2841,7 @@
   (symbol (lib_id "Memory_RAM:AS6C4008-55PCN") (at 205.74 124.46 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 59694bb4-7dc8-4fed-9803-cb61897ba19b)
-    (property "Reference" "U607" (at 207.6959 95.25 0)
+    (property "Reference" "U606" (at 207.6959 95.25 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "AS6C4008-55PCN" (at 207.6959 97.79 0)
@@ -2888,7 +2888,7 @@
     (instances
       (project "pg09-system"
         (path "/44572023-3621-4b3a-bd53-c3b2b3f42871/c22548cb-3a32-4ecf-b2c4-e43fd96dc369"
-          (reference "U607") (unit 1)
+          (reference "U606") (unit 1)
         )
       )
     )
@@ -2897,7 +2897,7 @@
   (symbol (lib_id "Memory_RAM:AS6C4008-55PCN") (at 144.78 124.46 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 6718c249-6f2d-40be-8ff5-6dd7befb063d)
-    (property "Reference" "U606" (at 146.7359 95.25 0)
+    (property "Reference" "U605" (at 146.7359 95.25 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "AS6C4008-55PCN" (at 146.7359 97.79 0)
@@ -2944,7 +2944,7 @@
     (instances
       (project "pg09-system"
         (path "/44572023-3621-4b3a-bd53-c3b2b3f42871/c22548cb-3a32-4ecf-b2c4-e43fd96dc369"
-          (reference "U606") (unit 1)
+          (reference "U605") (unit 1)
         )
       )
     )
@@ -3048,7 +3048,7 @@
   (symbol (lib_id "Memory_RAM:AS6C4008-55PCN") (at 205.74 46.99 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 7d17207f-c1f7-4d49-bb7d-3e346745a4f9)
-    (property "Reference" "U605" (at 207.6959 17.78 0)
+    (property "Reference" "U604" (at 207.6959 17.78 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "AS6C4008-55PCN" (at 207.6959 20.32 0)
@@ -3095,7 +3095,7 @@
     (instances
       (project "pg09-system"
         (path "/44572023-3621-4b3a-bd53-c3b2b3f42871/c22548cb-3a32-4ecf-b2c4-e43fd96dc369"
-          (reference "U605") (unit 1)
+          (reference "U604") (unit 1)
         )
       )
     )
@@ -3429,7 +3429,7 @@
   (symbol (lib_id "jrt-ICs:AS6C6264") (at 254 81.28 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid e1bf38c4-4f5c-4936-bbb1-d8daf818c3ed)
-    (property "Reference" "U608" (at 255.9559 59.69 0)
+    (property "Reference" "U602" (at 255.9559 59.69 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "AS6C6264-55PCN" (at 255.9559 62.23 0)
@@ -3471,7 +3471,7 @@
     (instances
       (project "pg09-system"
         (path "/44572023-3621-4b3a-bd53-c3b2b3f42871/c22548cb-3a32-4ecf-b2c4-e43fd96dc369"
-          (reference "U608") (unit 1)
+          (reference "U602") (unit 1)
         )
       )
     )
@@ -3543,7 +3543,7 @@
   (symbol (lib_id "Memory_RAM:AS6C4008-55PCN") (at 83.82 46.99 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid f19ebe1a-9a7f-4584-b255-3484fa917eef)
-    (property "Reference" "U602" (at 85.7759 17.78 0)
+    (property "Reference" "U607" (at 85.7759 17.78 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "AS6C4008-55PCN" (at 85.7759 20.32 0)
@@ -3590,7 +3590,7 @@
     (instances
       (project "pg09-system"
         (path "/44572023-3621-4b3a-bd53-c3b2b3f42871/c22548cb-3a32-4ecf-b2c4-e43fd96dc369"
-          (reference "U602") (unit 1)
+          (reference "U607") (unit 1)
         )
       )
     )
@@ -3633,7 +3633,7 @@
   (symbol (lib_id "74xx:74LS139") (at 73.152 156.21 0) (unit 2)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid f3a3da99-4293-49d2-9a63-79b13ed5a2bc)
-    (property "Reference" "U603" (at 68.834 147.066 0)
+    (property "Reference" "U601" (at 68.834 147.066 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "74AHC139" (at 68.834 149.606 0)
@@ -3664,7 +3664,7 @@
     (instances
       (project "pg09-system"
         (path "/44572023-3621-4b3a-bd53-c3b2b3f42871/c22548cb-3a32-4ecf-b2c4-e43fd96dc369"
-          (reference "U603") (unit 2)
+          (reference "U601") (unit 2)
         )
       )
     )
