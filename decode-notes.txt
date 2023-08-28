@@ -19,7 +19,7 @@ IRQ15 - video
 SYSTEM REGISTERS: IO0SEL
 
 ROM banker	(4)
-	BROM bank + PSU controller interface
+	BROM bank
 RAM banker	(4)
 	LBRAM bank + HBRAM bank
 Int enables	(4)
@@ -28,6 +28,7 @@ Int VBR		(2)
 	MSB + LSB
 [unused]	(2)
 Clock Speed	(1)
+PSU controller	(1)
 
 Offset		A4	A3	A2	A1	A0
 $00		0	0	0	0	0	ROM banker PIA
@@ -39,6 +40,7 @@ $08		0	1	0	0	0	Int enables PIA
 $0c		0	1	1	0	0	Int VBR MSB |
 $0d		0	1	1	0	1	        LSB |
 $10		1	0	0	0	0	Clock Speed
+$11		1	0	0	0	1	PSU controller
 
 
 UARTs: IO1SEL
