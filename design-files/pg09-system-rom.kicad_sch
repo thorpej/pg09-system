@@ -1212,7 +1212,7 @@
   (symbol (lib_id "jrt-ICs:AT28C64") (at 151.13 49.53 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 64bc5768-b032-4aff-b100-ec8f4efbbcac)
-    (property "Reference" "U502" (at 153.0859 24.13 0)
+    (property "Reference" "U501" (at 153.0859 24.13 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "AT28C64" (at 153.0859 26.67 0)
@@ -1253,7 +1253,7 @@
     (instances
       (project "pg09-system"
         (path "/44572023-3621-4b3a-bd53-c3b2b3f42871/29ccfefd-4ecb-4886-be07-d9fca15abc34"
-          (reference "U502") (unit 1)
+          (reference "U501") (unit 1)
         )
       )
     )
@@ -1287,7 +1287,7 @@
   (symbol (lib_id "Memory_Flash:SST39SF040") (at 151.13 119.38 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid b4377998-449a-4bac-9b46-5162ee8cfe12)
-    (property "Reference" "U503" (at 153.0859 83.82 0)
+    (property "Reference" "U502" (at 153.0859 83.82 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "SST39SF040" (at 153.0859 86.36 0)
@@ -1334,7 +1334,7 @@
     (instances
       (project "pg09-system"
         (path "/44572023-3621-4b3a-bd53-c3b2b3f42871/29ccfefd-4ecb-4886-be07-d9fca15abc34"
-          (reference "U503") (unit 1)
+          (reference "U502") (unit 1)
         )
       )
     )
