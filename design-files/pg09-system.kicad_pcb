@@ -15701,7 +15701,7 @@
   (gr_text "INTMUXAV" (at 209.8548 245.8466) (layer "F.SilkS") (tstamp 3d7682c7-a256-485e-a2e2-7452e1421be5)
     (effects (font (size 1 1) (thickness 0.15) italic) (justify left bottom))
   )
-  (gr_text "Banked ROM" (at 199.771 322.834) (layer "F.SilkS") (tstamp 3e513861-f1ed-41e2-904c-af4f5fd05ab3)
+  (gr_text "Banked ROM" (at 189.6618 322.834) (layer "F.SilkS") (tstamp 3e513861-f1ed-41e2-904c-af4f5fd05ab3)
     (effects (font (size 1 1) (thickness 0.15) italic) (justify left bottom))
   )
   (gr_text "Reset" (at 401.066 324.612) (layer "F.SilkS") (tstamp 444b5fe0-5793-43ba-a050-a51593e74ef8)
