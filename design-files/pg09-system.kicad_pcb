@@ -5963,7 +5963,7 @@
 
   (footprint "Package_DIP:DIP-28_W15.24mm_Socket" (layer "F.Cu")
     (tstamp 5437cf1c-df06-4491-a400-211df9c47209)
-    (at 342.5366 278.097)
+    (at 361.0102 278.097)
     (descr "28-lead though-hole mounted DIP package, row spacing 15.24 mm (600 mils), Socket")
     (tags "THT DIP DIL PDIP 2.54mm 15.24mm 600mil Socket")
     (property "Sheetfile" "pg09-system-ram.kicad_sch")
@@ -6237,7 +6237,7 @@
 
   (footprint "Package_DIP:DIP-32_W15.24mm_Socket" (layer "F.Cu")
     (tstamp 58a85329-8c41-485e-b088-5ba01a989da0)
-    (at 360.977 273.017)
+    (at 342.5698 273.017)
     (descr "32-lead though-hole mounted DIP package, row spacing 15.24 mm (600 mils), Socket")
     (tags "THT DIP DIL PDIP 2.54mm 15.24mm 600mil Socket")
     (property "Sheetfile" "pg09-system-ram.kicad_sch")
@@ -6996,7 +6996,7 @@
 
   (footprint "Capacitor_THT:C_Disc_D3.8mm_W2.6mm_P2.50mm" (layer "F.Cu")
     (tstamp 6c0a6805-86ad-4f3a-8d68-cf28b1814502)
-    (at 376.1916 270.2814 90)
+    (at 357.7844 270.2814 90)
     (descr "C, Disc series, Radial, pin pitch=2.50mm, , diameter*width=3.8*2.6mm^2, Capacitor, http://www.vishay.com/docs/45233/krseries.pdf")
     (tags "C Disc series Radial pin pitch 2.50mm  diameter 3.8mm width 2.6mm Capacitor")
     (property "Sheetfile" "pg09-system-ram.kicad_sch")
@@ -7173,7 +7173,7 @@
 
   (footprint "Capacitor_THT:C_Disc_D3.8mm_W2.6mm_P2.50mm" (layer "F.Cu")
     (tstamp 72a747fb-7218-4224-9e0e-08129174119d)
-    (at 357.732 275.3614 90)
+    (at 376.2056 275.3614 90)
     (descr "C, Disc series, Radial, pin pitch=2.50mm, , diameter*width=3.8*2.6mm^2, Capacitor, http://www.vishay.com/docs/45233/krseries.pdf")
     (tags "C Disc series Radial pin pitch 2.50mm  diameter 3.8mm width 2.6mm Capacitor")
     (property "Sheetfile" "pg09-system-ram.kicad_sch")
@@ -15487,7 +15487,7 @@
   (gr_text "ABUSSEL" (at 286.004 204.2138 90) (layer "F.SilkS") (tstamp 07163de4-021b-4bb8-8eaa-855d2d7e3649)
     (effects (font (size 1 1) (thickness 0.15) italic) (justify left bottom))
   )
-  (gr_text "High Banked RAM" (at 362.3994 316.197) (layer "F.SilkS") (tstamp 07cd7e67-0d0e-4c5a-9e1e-4b34a409d49a)
+  (gr_text "High Banked RAM" (at 343.9922 316.197) (layer "F.SilkS") (tstamp 07cd7e67-0d0e-4c5a-9e1e-4b34a409d49a)
     (effects (font (size 1 1) (thickness 0.15) italic) (justify left bottom))
   )
   (gr_text "4MHz" (at 352.605 253.746) (layer "F.SilkS") (tstamp 1dc97966-fea1-472c-b4e6-20d28481cdbd)
@@ -15541,7 +15541,7 @@
   (gr_text "2MHz" (at 352.605 256.286) (layer "F.SilkS") (tstamp 881494c3-b108-498a-acc4-ab94a96dcc37)
     (effects (font (size 1 1) (thickness 0.15)) (justify left bottom))
   )
-  (gr_text "Fixed RAM" (at 346.9816 316.197) (layer "F.SilkS") (tstamp 9d280b35-db6c-42c5-a582-30e952dd5797)
+  (gr_text "Fixed RAM" (at 365.4552 316.197) (layer "F.SilkS") (tstamp 9d280b35-db6c-42c5-a582-30e952dd5797)
     (effects (font (size 1 1) (thickness 0.15) italic) (justify left bottom))
   )
   (gr_text "INTENC (0-7)" (at 183.5088 245.8444) (layer "F.SilkS") (tstamp a89159d1-1e01-4d71-a399-237aa3be5ad2)
