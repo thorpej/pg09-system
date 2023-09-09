@@ -60,3 +60,5 @@ Offset		A4	A3	A2	A1	A0	VIA
 $00		0	0	0	0	0
 ..
 $10
+
+TMS9918A video: IO15SEL
