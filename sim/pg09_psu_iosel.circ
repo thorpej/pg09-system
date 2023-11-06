@@ -122,7 +122,7 @@
       <a name="facing" val="east"/>
       <a name="label" val="nWR"/>
     </comp>
-    <comp lib="0" loc="(630,420)" name="Tunnel">
+    <comp lib="0" loc="(630,400)" name="Tunnel">
       <a name="label" val="nPSUWR"/>
     </comp>
     <comp lib="0" loc="(80,280)" name="Tunnel">
@@ -162,6 +162,6 @@
     <wire from="(440,340)" to="(490,340)"/>
     <wire from="(440,380)" to="(490,380)"/>
     <wire from="(470,300)" to="(490,300)"/>
-    <wire from="(550,420)" to="(630,420)"/>
+    <wire from="(550,400)" to="(630,400)"/>
   </circuit>
 </project>

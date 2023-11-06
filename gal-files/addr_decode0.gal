@@ -19,6 +19,12 @@ IO6  = A15 * /A14 * /A13 * A12 * A11 * A10 * A9 * /A8 *  A7 *  A6 * /A5
 IO7  = A15 * /A14 * /A13 * A12 * A11 * A10 * A9 * /A8 *  A7 *  A6 *  A5
 
 ;
+; The flash ROM is selected whenever the banked ROM or fixed ROM
+; regions are selected.  However, when the banked ROM region is
+; selected, we also assert the /BROM signal to switch the bank
+; selector MUX.
+
+;
 ; Decodes banked ROM.
 ;
 ;        |--Banked ROM-|
@@ -26,11 +32,11 @@ IO7  = A15 * /A14 * /A13 * A12 * A11 * A10 * A9 * /A8 *  A7 *  A6 *  A5
 BROM = A15 *  A14 * /A13
 
 ;
-; Decodes fixed ROM.
+; Decodes flash ROM (fixed ROM regsion + banked ROM region).
 ;
-;        |--Fixed ROM--|
-;        1      1      1     x     x     x
-FROM = A15 *  A14 *  A13
+;        |--Flash ROM--|
+;        1      1      x     x     x     x
+FROM = A15 *  A14
 
 DESCRIPTION
 
