@@ -82,7 +82,7 @@ action_list()
 
 	for galtype in $galtypes; do
 		if test x"filter" != x; then
-			echo "$listing" | grep "$galtype" | grep "$filter"
+			echo "$listing" | grep "$galtype" | grep -i "$filter"
 		else
 			echo "$listing" | grep "$galtype"
 		fi
