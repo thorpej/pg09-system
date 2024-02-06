@@ -2,7 +2,7 @@ IRQ assignments (super preliminary):
 IRQ0 - SD Card
 IRQ1 - reserved
 IRQ2 - reserved
-IRQ3 - reserved
+IRQ3 - console / debug UART
 IRQ4 - expansion
 IRQ5 - expansion
 IRQ6 - expansion

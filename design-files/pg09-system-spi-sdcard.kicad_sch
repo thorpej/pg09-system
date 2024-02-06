@@ -1281,6 +1281,7 @@
     )
   )
 
+
   (junction (at 196.088 130.048) (diameter 0) (color 0 0 0 0)
     (uuid 130d2f9d-1712-43f0-8b06-38e292417a1f)
   )
@@ -1915,7 +1916,7 @@
           (reference "U703") (unit 4)
         )
         (path "/44572023-3621-4b3a-bd53-c3b2b3f42871/a9e9ad98-9eec-45f2-8e38-6db75be52ef6"
-          (reference "U703") (unit 4)
+          (reference "U703") (unit 3)
         )
       )
     )
@@ -2430,7 +2431,7 @@
           (reference "RN701") (unit 4)
         )
         (path "/44572023-3621-4b3a-bd53-c3b2b3f42871/a9e9ad98-9eec-45f2-8e38-6db75be52ef6"
-          (reference "RN701") (unit 6)
+          (reference "RN701") (unit 4)
         )
       )
     )
@@ -2564,21 +2565,21 @@
       (effects (font (size 1.27 1.27)) hide)
     )
     (pin "1" (uuid c76f3dd6-faf6-431d-8243-7ae41bca5775))
-    (pin "2" (uuid fc6502c7-2f3b-4e8a-8cf3-7ce0b5774a92))
-    (pin "3" (uuid 4a09458b-071d-44e6-a30a-f49d866cbd5f))
-    (pin "4" (uuid 60f40c47-52e3-4245-b677-1394c3bffdd5))
+    (pin "2" (uuid fc6502c7-2f3b-4e8a-8cf3-7ce0b5774a93))
+    (pin "3" (uuid 4a09458b-071d-44e6-a30a-f49d866cbd60))
+    (pin "4" (uuid 60f40c47-52e3-4245-b677-1394c3bffdd6))
     (pin "5" (uuid 6cd3bb79-63f6-4b8f-8a1f-ffd031c8a282))
-    (pin "6" (uuid 536e75eb-1a8d-4b4e-a342-4542e392af60))
-    (pin "7" (uuid d7a42d1f-12d4-4c10-8404-52808931770d))
-    (pin "8" (uuid 94de2b61-1e20-4088-b861-cdc49277f449))
-    (pin "9" (uuid f800dec0-7d34-4792-9088-f1cf628fda74))
+    (pin "6" (uuid 536e75eb-1a8d-4b4e-a342-4542e392af61))
+    (pin "7" (uuid d7a42d1f-12d4-4c10-8404-52808931770e))
+    (pin "8" (uuid 94de2b61-1e20-4088-b861-cdc49277f44a))
+    (pin "9" (uuid f800dec0-7d34-4792-9088-f1cf628fda75))
     (instances
       (project "pg09-system"
         (path "/44572023-3621-4b3a-bd53-c3b2b3f42871/ac00d1d6-4857-42f9-90e1-ab396f3828b3"
           (reference "RN701") (unit 4)
         )
         (path "/44572023-3621-4b3a-bd53-c3b2b3f42871/a9e9ad98-9eec-45f2-8e38-6db75be52ef6"
-          (reference "RN701") (unit 5)
+          (reference "RN701") (unit 3)
         )
       )
     )

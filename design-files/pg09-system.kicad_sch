@@ -1368,6 +1368,7 @@
     )
   )
 
+
   (junction (at 179.07 198.628) (diameter 0) (color 0 0 0 0)
     (uuid 0a741237-daa2-45ee-96b5-3f471280ffbc)
   )
@@ -2867,10 +2868,10 @@
     )
   )
 
-  (netclass_flag "" (length 2.54) (shape round) (at 347.726 221.234 0) (fields_autoplaced)
+  (netclass_flag "" (length 2.54) (shape round) (at 348.488 221.234 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid cdcfee2d-279d-4229-9b4a-2776b07ac6d5)
-    (property "Netclass" "Power" (at 348.4245 218.694 0)
+    (property "Netclass" "Power" (at 349.1865 218.694 0)
       (effects (font (size 1.27 1.27) italic) (justify left))
     )
   )
