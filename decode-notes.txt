@@ -16,6 +16,41 @@ IRQ13 - expansion
 IRQ14 - expansion
 IRQ15 - video
 
+VERA-compatible video module connector:
+2x12 pin header
+
+    +5V  1 2  GND
+     D7  3 4  D6
+     D5  5 6  D4
+     D3  7 8  D2
+     D1  9 10 D0
+    /CS 11 12 /RESET
+    /WR 13 14 /IRQ
+     A4 15 16 /RD
+     A2 17 18 A3
+     A0 19 20 A1
+    GND 21 22 GND
+L_AUDIO 23 24 R_AUDIO
+
+Pin 1 to right edge of board: 38mm
+Pin 1 to left edge of board: 58.4mm
+Pin 1 to bottom edge of board: 2mm
+Pin 1 to top edge of board: 53mm
+Overall board dimensions: X 96.5mm x Y 55mm
+Bottom mounting holes: 4mm NPTH, -3.5mm from each corner
+Right top mounting hole: 4mm NPTH, -31.5mm from bottom right hole
+Left top mounting hole: 4mm NPTH, -21.5mm from bottom left hole
+
+D0-D7   - bidirectional
+/CS     - input
+/RESET  - input
+/WR     - input
+/RD     - input
+/IRQ    - output
+A0-A4   - input
+L_AUDIO - output
+R_AUDIO - output
+
 SYSTEM REGISTERS: IO0SEL
 
 Low Banker	(4)
