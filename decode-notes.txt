@@ -14,7 +14,7 @@ IRQ11 - expansion
 IRQ12 - keyboard
 IRQ13 - expansion
 IRQ14 - expansion
-IRQ15 - video
+IRQ15 - video (VERA module connector)
 
 VERA-compatible video module connector:
 2x12 pin header
@@ -96,4 +96,4 @@ $00		0	0	0	0	0
 ..
 $10
 
-TMS9918A video: IO15SEL
+Video (VERA module connector): IO15SEL
