@@ -1034,8 +1034,8 @@
     (uuid ff203d19-3637-4c4a-b9ea-ccbdd5fa9cf6)
   )
 
-  (text_box "Memory map:\n$0000 - $7FFF Low banked RAM (32K)\n$8000 - $9DFF Fixed RAM (7.5K)\n$9E00 - $9FFF I/O space (0.5K)\n$A000 - $BFFF High banked RAM (8K)\n$C000 - $DFFF Banked ROM (8K)\n$E000 - $FFFF Fixed ROM (8K)\n\nA15 is used directly as chip select for low\nbanked RAM."
-    (at 16.51 78.486 0) (size 49.53 22.225)
+  (text_box "Memory map:\n$0000 - $7FFF Low banked RAM (32K)\n$8000 - $9DFF Fixed RAM (7.5K)\n$9E00 - $9FFF I/O space (0.5K)\n$A000 - $BFFF High banked RAM (8K)\n$C000 - $DFFF Banked ROM (8K)\n$E000 - $FFFF Fixed ROM (8K)"
+    (at 16.51 78.486 0) (size 49.53 15.875)
     (stroke (width 0) (type default))
     (fill (type none))
     (effects (font (size 1.27 1.27)) (justify left top))
