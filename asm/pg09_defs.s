@@ -24,6 +24,10 @@
 ; SUCH DAMAGE.
 ;
 
+	if	pg09_system_pg09_defs_included
+	else
+pg09_system_pg09_defs_included equ 1
+
 ;
 ; Memory map and register definitions for the 6809 Playround.
 ;
@@ -115,3 +119,5 @@ SDVIA_BASE		equ	IO2_START
 TMS9918A_BASE		equ	IO15_START
 VDP_REG_MODE0		equ	TMS9918A_BASE+0
 VDP_REG_MODE1		equ	TMS9918A_BASE+1
+
+	endif	; pg09_system_pg09_defs_included
