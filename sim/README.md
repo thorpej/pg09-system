@@ -2,6 +2,8 @@
 
 * pg09_clock_generator.circ -- Simulation of the clock generator.
 * pg09_lbram_decode.circ -- Simulation of the Low Banked RAM bank decoding.
+* pg09_from_brom_decode.circ -- Simulation of the Fixed / Banked ROM selector
+  logic.
 * pg09_addr_decode_stage1.circ -- Simulation of the first level of the
   address decoder.
   * **OBSOLETE: I decided to put the whole thing in a pair of GALs.**
