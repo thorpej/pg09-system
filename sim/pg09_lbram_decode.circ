@@ -303,6 +303,9 @@
     <comp lib="6" loc="(730,470)" name="74139">
       <a name="facing" val="south"/>
     </comp>
+    <comp lib="8" loc="(784,834)" name="Text">
+      <a name="text" val="Chip select outputs are active-low."/>
+    </comp>
     <wire from="(250,710)" to="(290,710)"/>
     <wire from="(250,740)" to="(290,740)"/>
     <wire from="(290,240)" to="(420,240)"/>
