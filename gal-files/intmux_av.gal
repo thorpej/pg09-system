@@ -1,8 +1,8 @@
 GAL22V10
 INTMUXAV
 
-BS /aINTC L2 L1  L0  LA  U2 U1 U0 UA A0IN GND
-NC  NC    NC NC /IRQ IVV A4 A3 A2 A1 A0   VCC
+BS /OE L2 L1  L0  LA  U2 U1 U0 UA A0IN GND
+NC  NC NC NC /IRQ IVV A4 A3 A2 A1 A0   VCC
 
 ;
 ; THIS IS THE AUTO-VECTORED VERSION.
@@ -111,11 +111,11 @@ A0.T  = A0IN		; just follow A0IN (we're tri-stating it)
 ;
 ; Our outputs are enabled when ABUSSEL tells us to drive the address bus.
 ;
-A4.E  = aINTC
-A3.E  = aINTC
-A2.E  = aINTC
-A1.E  = aINTC
-A0.E  = aINTC
+A4.E  = OE
+A3.E  = OE
+A2.E  = OE
+A1.E  = OE
+A0.E  = OE
 
 DESCRIPTION
 
