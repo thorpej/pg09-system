@@ -368,7 +368,7 @@
     <comp lib="5" loc="(480,680)" name="LED"/>
     <comp lib="5" loc="(480,710)" name="LED"/>
     <comp lib="8" loc="(344,839)" name="Text">
-      <a name="text" val="(OE input not shown.)"/>
+      <a name="text" val="(nOE input not shown.)"/>
     </comp>
     <comp lib="8" loc="(591,616)" name="Text">
       <a name="text" val="input is asserted."/>
@@ -379,8 +379,8 @@
     <comp lib="8" loc="(689,565)" name="Text">
       <a name="text" val="Interrupt Vector Valid output to ABUSSEL."/>
     </comp>
-    <comp lib="8" loc="(694,597)" name="Text">
-      <a name="text" val="A0-A4 drive the address bus when the OE"/>
+    <comp lib="8" loc="(699,598)" name="Text">
+      <a name="text" val="A0-A4 drive the address bus when the nOE"/>
     </comp>
     <wire from="(100,190)" to="(130,190)"/>
     <wire from="(100,30)" to="(130,30)"/>
