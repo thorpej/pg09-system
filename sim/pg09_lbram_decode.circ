@@ -246,21 +246,21 @@
     <comp lib="0" loc="(600,430)" name="Tunnel">
       <a name="label" val="LRBS2"/>
     </comp>
-    <comp lib="0" loc="(620,480)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="label" val="A15"/>
-    </comp>
-    <comp lib="0" loc="(620,520)" name="Tunnel">
+    <comp lib="0" loc="(610,520)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="label" val="LRCS1"/>
     </comp>
-    <comp lib="0" loc="(620,560)" name="Tunnel">
+    <comp lib="0" loc="(610,560)" name="Tunnel">
       <a name="facing" val="east"/>
-      <a name="label" val="CHIP1"/>
+      <a name="label" val="nCHIP1"/>
     </comp>
-    <comp lib="0" loc="(620,600)" name="Tunnel">
+    <comp lib="0" loc="(610,600)" name="Tunnel">
       <a name="facing" val="east"/>
-      <a name="label" val="CHIP3"/>
+      <a name="label" val="nCHIP3"/>
+    </comp>
+    <comp lib="0" loc="(620,480)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="A15"/>
     </comp>
     <comp lib="0" loc="(690,500)" name="Tunnel">
       <a name="facing" val="east"/>
@@ -268,32 +268,32 @@
     </comp>
     <comp lib="0" loc="(690,540)" name="Tunnel">
       <a name="facing" val="east"/>
-      <a name="label" val="CHIP0"/>
+      <a name="label" val="nCHIP0"/>
     </comp>
     <comp lib="0" loc="(690,580)" name="Tunnel">
       <a name="facing" val="east"/>
-      <a name="label" val="CHIP2"/>
+      <a name="label" val="nCHIP2"/>
     </comp>
-    <comp lib="0" loc="(700,710)" name="Tunnel">
+    <comp lib="0" loc="(710,710)" name="Tunnel">
       <a name="facing" val="east"/>
-      <a name="label" val="CHIP0"/>
+      <a name="label" val="nCHIP0"/>
     </comp>
-    <comp lib="0" loc="(700,740)" name="Tunnel">
+    <comp lib="0" loc="(710,740)" name="Tunnel">
       <a name="facing" val="east"/>
-      <a name="label" val="CHIP1"/>
+      <a name="label" val="nCHIP1"/>
     </comp>
-    <comp lib="0" loc="(700,770)" name="Tunnel">
+    <comp lib="0" loc="(710,770)" name="Tunnel">
       <a name="facing" val="east"/>
-      <a name="label" val="CHIP2"/>
+      <a name="label" val="nCHIP2"/>
     </comp>
-    <comp lib="0" loc="(700,800)" name="Tunnel">
+    <comp lib="0" loc="(710,800)" name="Tunnel">
       <a name="facing" val="east"/>
-      <a name="label" val="CHIP3"/>
+      <a name="label" val="nCHIP3"/>
     </comp>
-    <comp lib="5" loc="(700,710)" name="LED"/>
-    <comp lib="5" loc="(700,740)" name="LED"/>
-    <comp lib="5" loc="(700,770)" name="LED"/>
-    <comp lib="5" loc="(700,800)" name="LED"/>
+    <comp lib="5" loc="(720,710)" name="LED"/>
+    <comp lib="5" loc="(720,740)" name="LED"/>
+    <comp lib="5" loc="(720,770)" name="LED"/>
+    <comp lib="5" loc="(720,800)" name="LED"/>
     <comp lib="6" loc="(450,230)" name="74157">
       <a name="facing" val="south"/>
     </comp>
@@ -380,12 +380,16 @@
     <wire from="(590,310)" to="(600,310)"/>
     <wire from="(590,320)" to="(590,340)"/>
     <wire from="(590,340)" to="(600,340)"/>
+    <wire from="(610,520)" to="(700,520)"/>
+    <wire from="(610,560)" to="(700,560)"/>
+    <wire from="(610,600)" to="(700,600)"/>
     <wire from="(620,480)" to="(700,480)"/>
-    <wire from="(620,520)" to="(700,520)"/>
-    <wire from="(620,560)" to="(700,560)"/>
-    <wire from="(620,600)" to="(700,600)"/>
     <wire from="(690,500)" to="(700,500)"/>
     <wire from="(690,540)" to="(700,540)"/>
     <wire from="(690,580)" to="(700,580)"/>
+    <wire from="(710,710)" to="(720,710)"/>
+    <wire from="(710,740)" to="(720,740)"/>
+    <wire from="(710,770)" to="(720,770)"/>
+    <wire from="(710,800)" to="(720,800)"/>
   </circuit>
 </project>
