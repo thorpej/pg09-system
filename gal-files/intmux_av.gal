@@ -17,44 +17,46 @@ NC  NC NC NC /IRQ IVV A4 A3 A2 A1 A0   VCC
 ; We pass the CPU's A0 signal through for the 2-cycle fetch of the handler
 ; address.
 ;
-; It is designed to be paired with a 65C21 PIA to act as the interrupt
-; enable registers (PA lower and PB upper).
+; It's intended that some sort of GPIO controller (e.g. 65C21) provides the
+; enable signals, which are mixed with the IRQ signals using generic glue
+; logic before being sent to 74HC148 priority encoders (look at the '748
+; function table very carefully to see how we're using the output here!).
 ;
 ; Function table for the Address and /IRQ outputs:
 ;
 ; LA L2 L1 L0 UA U2 U1 U0   A4 A3 A2 A1 /IRQ
-;  L  x  x  x  L  x  x  x    L  L  L  L   H
-;  H  L  L  L  L  x  x  x    L  L  L  L   L
-;  H  L  L  H  L  x  x  x    L  L  L  H   L
-;  H  L  H  L  L  x  x  x    L  L  H  L   L
-;  H  L  H  H  L  x  x  x    L  L  H  H   L
-;  H  H  L  L  L  x  x  x    L  H  L  L   L
-;  H  H  L  H  L  x  x  x    L  H  L  H   L
-;  H  H  H  L  L  x  x  x    L  H  H  L   L
-;  H  H  H  H  L  x  x  x    L  H  H  H   L
-;  x  x  x  x  H  L  L  L    H  L  L  L   L
-;  x  x  x  x  H  L  L  H    H  L  L  H   L
-;  x  x  x  x  H  L  H  L    H  L  H  L   L
-;  x  x  x  x  H  L  H  H    H  L  H  H   L
-;  x  x  x  x  H  H  L  L    H  H  L  L   L
-;  x  x  x  x  H  H  L  H    H  H  L  H   L
-;  x  x  x  x  H  H  H  L    H  H  H  L   L
-;  x  x  x  x  H  H  H  H    H  H  H  H   L
+;  F  x  x  x  F  x  x  x    L  L  L  L   H
+;  T  F  F  F  F  x  x  x    L  L  L  L   L
+;  T  F  F  T  F  x  x  x    L  L  L  H   L
+;  T  F  T  F  F  x  x  x    L  L  H  L   L
+;  T  F  T  T  F  x  x  x    L  L  H  H   L
+;  T  T  F  F  F  x  x  x    L  H  L  L   L
+;  T  T  F  T  F  x  x  x    L  H  L  H   L
+;  T  T  T  F  F  x  x  x    L  H  H  L   L
+;  T  T  T  T  F  x  x  x    L  H  H  H   L
+;  x  x  x  x  T  F  F  F    H  L  L  L   L
+;  x  x  x  x  T  F  F  T    H  L  L  H   L
+;  x  x  x  x  T  F  T  F    H  L  H  L   L
+;  x  x  x  x  T  F  T  T    H  L  H  H   L
+;  x  x  x  x  T  T  F  F    H  H  L  L   L
+;  x  x  x  x  T  T  F  T    H  H  L  H   L
+;  x  x  x  x  T  T  T  F    H  H  H  L   L
+;  x  x  x  x  T  T  T  T    H  H  H  H   L
 ;
 ; The table makes it look a lot more complicated than it is.  What it
-; really boils down to is: For each shifted output digit, select the
-; Ln value if UA is low and the Un value if UA is high (A4 simply follows
-; UA to add 0 or 8 to the selected encoder's IRQ number).  If both LA
-; and UA are low, then the digits will be zero.
+; really boils down to is: For each output bit, select the corresponding Ln
+; value if UA is false and the Un value if UA is true (A4 simply follows UA
+; to add 0 or 8 to the selected encoder's IRQ number).  If both LA and UA are
+; false, then the digits will be zero.
 ;
 ; IVV (Interrupt Vector Valid) output needs to go high when we latch
 ; the initial interrupt-pending state (when BS goes high) if IRQ is
 ; asserted, and stay high until BS goes low.  We will use feedback from
 ; IVV to achieve this.  IVV is used by the ABUSSEL to determine if
-; INTMUXAV should drive the address bus when fetching the IRQ vector
-; (otherwise it let's the CPU drive the address bus to fetch the default
-; IRQ vector).  It exists to provide some measure of protection against
-; spurious interrupts:
+; the interrupt controller should drive the address bus when fetching the
+; IRQ vector (otherwise it let's the CPU drive the address bus to fetch
+; the default IRQ vector).  It exists to provide some measure of protection
+; against spurious interrupts:
 ;
 ; 1- /IRQ is asserted
 ; 2- CPU begins response, begins stacking registers
