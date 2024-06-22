@@ -96,4 +96,6 @@ $00		0	0	0	0	0
 ..
 $10
 
+I2C: IO3SEL
+
 Video (VERA module connector): IO15SEL
