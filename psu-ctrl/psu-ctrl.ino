@@ -206,17 +206,18 @@ toggle_power_led(void)
 /*
  * set_output_signal --
  *
- * Set the state of an output signal.  enabled == true means assert
- * the signal, regardless of its output level.
+ * Set the state of an "open drain" output signal.  enabled == true means
+ * assert the signal by pulling it low; false means let the output go back
+ * to Vcc via external pull-up.
  */
 static void
 set_output_signal(int pin, bool enable)
 {
   if (enable) {
-    digitalWrite(PSU_ON_PIN, LOW);
-    pinMode(PSU_ON_PIN, OUTPUT);
+    digitalWrite(pin, LOW);
+    pinMode(pin, OUTPUT);
   } else {
-    pinMode(PSU_ON_PIN, INPUT);
+    pinMode(pin, INPUT);
   }
 }
 
