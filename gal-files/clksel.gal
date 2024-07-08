@@ -1,8 +1,8 @@
 GAL22V10
 CLKSEL
 
-NC CLKIN16 CLKIN8 CLKIN4 /CLKSEL16 /CLKSEL8 /CLKSEL4 CS0 CS1 /CS2  /RD     GND
-NC D7      D6     D5      D4        D3       D2      D1  D0   NC    CLKOUT VCC
+ NC    CLKIN16 CLKIN8 CLKIN4 /CLKSEL16 /CLKSEL8 /CLKSEL4 CS0 CS1 /CS2    /RD     GND
+/RESET D7      D6     D5      D4        D3       D2      D1  D0   RESETH  CLKOUT VCC
 
 ;
 ; This is a clock selector.  It takes the 16MHz, 8MHZ, and 4MHz clock
@@ -30,6 +30,12 @@ NC D7      D6     D5      D4        D3       D2      D1  D0   NC    CLKOUT VCC
 CLKOUT = CLKIN4  * /CLKSEL16 * /CLKSEL8 *  CLKSEL4
        + CLKIN8  * /CLKSEL16 *  CLKSEL8 * /CLKSEL4
        + CLKIN16 *  CLKSEL16 * /CLKSEL8 * /CLKSEL4
+
+;
+; Provide an inverted copy of the /RESET signal (RESETH) for devices
+; that want an active-high reset signal.
+;
+RESETH = RESET
 
 ;
 ; Function table for clock speed register:

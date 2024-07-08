@@ -7,7 +7,7 @@
                           |                 |
                   CLKIN16 |  2           23 | CLKOUT
                           |                 |
-                   CLKIN8 |  3           22 | NC
+                   CLKIN8 |  3           22 | RESETH
                           |                 |
                    CLKIN4 |  4           21 | D0
                           |                 |
@@ -25,5 +25,5 @@
                           |                 |
                       /RD | 11           14 | D7
                           |                 |
-                      GND | 12           13 | NC
+                      GND | 12           13 | /RESET
                           -------------------
