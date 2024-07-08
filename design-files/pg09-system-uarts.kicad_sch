@@ -1250,7 +1250,7 @@
           (reference "C104") (unit 1)
         )
         (path "/44572023-3621-4b3a-bd53-c3b2b3f42871/ac00d1d6-4857-42f9-90e1-ab396f3828b3"
-          (reference "C704") (unit 1)
+          (reference "C703") (unit 1)
         )
       )
     )
@@ -1259,7 +1259,7 @@
   (symbol (lib_id "jrt-ICs:Ali_Express_FTDI_Breakout") (at 182.626 75.946 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 0ea27dc1-d8e3-415a-88f3-4eeddce3f281)
-    (property "Reference" "U704" (at 182.626 59.436 0)
+    (property "Reference" "U702" (at 182.626 59.436 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "Ali_Express_FTDI_Breakout" (at 182.626 61.976 0)
@@ -1292,7 +1292,7 @@
     (instances
       (project "pg09-system"
         (path "/44572023-3621-4b3a-bd53-c3b2b3f42871/ac00d1d6-4857-42f9-90e1-ab396f3828b3"
-          (reference "U704") (unit 1)
+          (reference "U702") (unit 1)
         )
       )
     )
@@ -1823,7 +1823,7 @@
           (reference "C103") (unit 1)
         )
         (path "/44572023-3621-4b3a-bd53-c3b2b3f42871/ac00d1d6-4857-42f9-90e1-ab396f3828b3"
-          (reference "C703") (unit 1)
+          (reference "C702") (unit 1)
         )
       )
     )
