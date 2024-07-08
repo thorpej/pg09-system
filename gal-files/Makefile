@@ -5,7 +5,7 @@ GALASM_FLAGS= 	-f -p
 
 JEDECS= 	addr_decode0.jed addr_decode1.jed \
 		abus_sel.jed \
-		intenc.jed intmux.jed intmux_av.jed \
+		intmux_av.jed \
 		mem_intf.jed \
 		clksel.jed
 
