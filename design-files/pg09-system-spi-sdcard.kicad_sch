@@ -1603,7 +1603,7 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 9147bee1-2c6b-4574-b570-86f963e16376)
   )
-  (text "Spare gates and resistors from UART sheet." (at 124.968 46.355 0)
+  (text "Spare gate from INTC sheet." (at 130.937 47.752 0)
     (effects (font (size 1.27 1.27) italic) (justify left bottom))
     (uuid efb2cb0c-2a9a-451c-88f2-34f50da5b75e)
   )
@@ -1834,7 +1834,7 @@
           (reference "U703") (unit 4)
         )
         (path "/44572023-3621-4b3a-bd53-c3b2b3f42871/a9e9ad98-9eec-45f2-8e38-6db75be52ef6"
-          (reference "U703") (unit 3)
+          (reference "U415") (unit 3)
         )
       )
     )
