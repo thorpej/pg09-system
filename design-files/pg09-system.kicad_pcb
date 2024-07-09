@@ -8147,7 +8147,7 @@
 
   (footprint "Capacitor_THT:C_Disc_D3.8mm_W2.6mm_P2.50mm" (layer "F.Cu")
     (tstamp 65ae898a-d55b-45ef-897b-0f387de4fca2)
-    (at 355.346 250.17 90)
+    (at 411.6578 143.022 -90)
     (descr "C, Disc series, Radial, pin pitch=2.50mm, , diameter*width=3.8*2.6mm^2, Capacitor, http://www.vishay.com/docs/45233/krseries.pdf")
     (tags "C Disc series Radial pin pitch 2.50mm  diameter 3.8mm width 2.6mm Capacitor")
     (property "Sheetfile" "pg09-system-uarts.kicad_sch")
@@ -8196,9 +8196,9 @@
       (stroke (width 0.1) (type solid)) (layer "F.Fab") (tstamp 553f6813-b7df-4531-a1be-d94a836a6c75))
     (fp_line (start 3.15 1.3) (end 3.15 -1.3)
       (stroke (width 0.1) (type solid)) (layer "F.Fab") (tstamp 0a73ba09-7637-46aa-a551-80659f39aaae))
-    (pad "1" thru_hole circle (at 0 0 90) (size 1.6 1.6) (drill 0.8) (layers "*.Cu" "*.Mask")
+    (pad "1" thru_hole circle (at 0 0 270) (size 1.6 1.6) (drill 0.8) (layers "*.Cu" "*.Mask")
       (net 1 "+5V") (pintype "passive") (tstamp 4a0b025c-8262-49fe-8a50-de6fd692d452))
-    (pad "2" thru_hole circle (at 2.5 0 90) (size 1.6 1.6) (drill 0.8) (layers "*.Cu" "*.Mask")
+    (pad "2" thru_hole circle (at 2.5 0 270) (size 1.6 1.6) (drill 0.8) (layers "*.Cu" "*.Mask")
       (net 2 "GND") (pintype "passive") (tstamp 09e84a0c-5039-4746-8e49-9a60aa7acca9))
     (model "${KICAD6_3DMODEL_DIR}/Capacitor_THT.3dshapes/C_Disc_D3.8mm_W2.6mm_P2.50mm.wrl"
       (offset (xyz 0 0 0))
@@ -11272,7 +11272,7 @@
 
   (footprint "Oscillator:Oscillator_DIP-8" (layer "F.Cu")
     (tstamp 9d0f7b28-cbce-4daa-b455-61a209117da0)
-    (at 360.172 259.842)
+    (at 416.052 150.6474)
     (descr "Oscillator, DIP8,http://cdn-reichelt.de/documents/datenblatt/B400/OSZI.pdf")
     (tags "oscillator")
     (property "Sheetfile" "pg09-system-uarts.kicad_sch")
@@ -14685,7 +14685,7 @@
 
   (footprint "Package_LCC:PLCC-44_THT-Socket" (layer "F.Cu")
     (tstamp c95e8bc8-fcbf-40f4-b099-e6649952733d)
-    (at 368.3 227.584)
+    (at 413.766 119.7356)
     (descr "PLCC, 44 pins, through hole")
     (tags "plcc leaded")
     (property "Sheetfile" "pg09-system-uarts.kicad_sch")
@@ -16880,7 +16880,7 @@
 
   (footprint "Capacitor_THT:C_Disc_D3.8mm_W2.6mm_P2.50mm" (layer "F.Cu")
     (tstamp eeeeb01a-4387-4488-a04b-c533006a50ae)
-    (at 381 235.224 -90)
+    (at 426.466 127.3756 -90)
     (descr "C, Disc series, Radial, pin pitch=2.50mm, , diameter*width=3.8*2.6mm^2, Capacitor, http://www.vishay.com/docs/45233/krseries.pdf")
     (tags "C Disc series Radial pin pitch 2.50mm  diameter 3.8mm width 2.6mm Capacitor")
     (property "Sheetfile" "pg09-system-uarts.kicad_sch")
