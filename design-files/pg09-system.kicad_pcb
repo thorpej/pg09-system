@@ -8139,7 +8139,7 @@
     (property "ki_keywords" "capacitor cap")
     (path "/7138fc46-10d4-4cc4-afd5-54717dbe5db7/c7796bc2-6f2d-495d-a4b8-8ad858e0f927")
     (attr through_hole)
-    (fp_text reference "C413" (at 1.25 -2.55) (layer "F.SilkS") hide
+    (fp_text reference "C412" (at 1.25 -2.55) (layer "F.SilkS") hide
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 0c94af54-1e7d-48fc-8b7b-dd9e3e4b0a93)
     )
@@ -12329,7 +12329,7 @@
     (property "ki_keywords" "capacitor cap")
     (path "/7138fc46-10d4-4cc4-afd5-54717dbe5db7/50a7c538-e2df-4046-a679-074bb424faba")
     (attr through_hole)
-    (fp_text reference "C415" (at 1.25 -2.55) (layer "F.SilkS") hide
+    (fp_text reference "C414" (at 1.25 -2.55) (layer "F.SilkS") hide
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp bf8a1ce4-531e-4642-acd0-dedb17494025)
     )
@@ -12473,7 +12473,7 @@
     (property "Sheetname" "Interrupt controller")
     (property "ki_description" "Hex Inverter")
     (property "ki_keywords" "HCMOS not inv")
-    (path "/7138fc46-10d4-4cc4-afd5-54717dbe5db7/6ce61046-7d0c-4dc3-8c49-cb3750d2ad51")
+    (path "/7138fc46-10d4-4cc4-afd5-54717dbe5db7/c0040af1-9042-4eb8-9274-030fd145c25e")
     (attr through_hole)
     (fp_text reference "U402" (at 3.81 -2.33) (layer "F.SilkS")
         (effects (font (size 1 1) (thickness 0.15)))
@@ -16008,7 +16008,7 @@
     (property "ki_keywords" "capacitor cap")
     (path "/7138fc46-10d4-4cc4-afd5-54717dbe5db7/91c39527-c51f-4ad8-ba14-d43a661b5577")
     (attr through_hole)
-    (fp_text reference "C414" (at 1.25 -2.55 90) (layer "F.SilkS") hide
+    (fp_text reference "C413" (at 1.25 -2.55 90) (layer "F.SilkS") hide
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp c30dfde1-b393-442c-b93f-37ac69ac699e)
     )
@@ -16700,7 +16700,7 @@
     (property "Sheetname" "Interrupt controller")
     (property "ki_description" "Inverter Open Collect")
     (property "ki_keywords" "TTL not inv OpenCol")
-    (path "/7138fc46-10d4-4cc4-afd5-54717dbe5db7/ebcccb43-1126-441e-9d0d-84582a58cad7")
+    (path "/7138fc46-10d4-4cc4-afd5-54717dbe5db7/b0bd6731-333a-4193-b20f-a926f946d845")
     (attr through_hole)
     (fp_text reference "U415" (at 3.81 -2.33 90) (layer "F.SilkS")
         (effects (font (size 1 1) (thickness 0.15)))
