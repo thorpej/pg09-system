@@ -17,13 +17,13 @@
                           |                 |
                        A4 |  7           18 | nA4
                           |                 |
-                       NC |  8           17 | /RD
+                       NC |  8           17 | nA3nA4
                           |                 |
-                       NC |  9           16 | /WR
+                       NC |  9           16 | /RD
                           |                 |
-                FLASHWREN | 10           15 | /FLASHWR
+                FLASHWREN | 10           15 | /WR
                           |                 |
-                       NC | 11           14 | NC
+                       NC | 11           14 | /FLASHWR
                           |                 |
                       GND | 12           13 | NC
                           -------------------
