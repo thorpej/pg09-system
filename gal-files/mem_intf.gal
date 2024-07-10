@@ -1,8 +1,8 @@
 GAL22V10
 MEMINTF
 
-PHI2 RWB  A0       A1  A2 A3  A4  NC  NC  FLASHWREN NC  GND
-NC   NC  /FLASHWR /WR /RD nA4 nA3 nA2 nA1 nA0       RWO VCC
+PHI2 RWB      A0  A1 A2     A3  A4  NC  NC  FLASHWREN NC  GND
+NC  /FLASHWR /WR /RD nA3nA4 nA4 nA3 nA2 nA1 nA0       RWO VCC
 
 ;
 ; Generate the /RD and /WR strobes.
@@ -33,6 +33,13 @@ nA1 = /A1
 nA2 = /A2
 nA3 = /A3
 nA4 = /A4
+
+;
+; For the PIAs that control the memory banks, it's convenient to have a
+; signal that indicates "A3 and A4 are both 0".
+;
+nA3nA4 = /A3 * /A4
+
 
 DESCRIPTION
 

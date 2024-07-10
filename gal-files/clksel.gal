@@ -1,8 +1,8 @@
 GAL22V10
 CLKSEL
 
- NC    CLKIN16 CLKIN8 CLKIN4 /CLKSEL16 /CLKSEL8 /CLKSEL4 CS0 CS1 /CS2    /RD     GND
-/RESET D7      D6     D5      D4        D3       D2      D1  D0   RESETH  CLKOUT VCC
+NC CLKIN16 CLKIN8 CLKIN4 /CLKSEL16 /CLKSEL8 /CLKSEL4 /CS /RD /RESET  NC     GND
+NC D7      D6     D5      D4        D3       D2       D1  D0  RESETH CLKOUT VCC
 
 ;
 ; This is a clock selector.  It takes the 16MHz, 8MHZ, and 4MHz clock
@@ -58,11 +58,11 @@ D2.T =  CLKSEL16 * /CLKSEL8 * /CLKSEL4
 D1.T = /CLKSEL16 *  CLKSEL8 * /CLKSEL4
 D0.T = /CLKSEL16 * /CLKSEL8 *  CLKSEL4
 
-D7.E = CS0 * CS1 * CS2 * RD
-D6.E = CS0 * CS1 * CS2 * RD
-D5.E = CS0 * CS1 * CS2 * RD
-D4.E = CS0 * CS1 * CS2 * RD
-D3.E = CS0 * CS1 * CS2 * RD
-D2.E = CS0 * CS1 * CS2 * RD
-D1.E = CS0 * CS1 * CS2 * RD
-D0.E = CS0 * CS1 * CS2 * RD
+D7.E = CS * RD
+D6.E = CS * RD
+D5.E = CS * RD
+D4.E = CS * RD
+D3.E = CS * RD
+D2.E = CS * RD
+D1.E = CS * RD
+D0.E = CS * RD

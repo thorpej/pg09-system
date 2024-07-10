@@ -65,18 +65,18 @@ Int VBR		(2)
 Clock Speed	(1)
 PSU controller	(1)
 
-Offset		A4	A3	A2	A1	A0
-$00		0	0	0	0	0	Low Banker PIA
+Offset		A4	A3	A2	A1	A0 R/W
+$00		0	0	0	x	x  x	Low Banker PIA
 ...
-$04		0	0	1	0	0	High Banker PIA
+$04		0	0	1	x	x  x	High Banker PIA
+..
+$08		0	1	x	0	0  0	PSU controller (WO)
+$08		0	1	x	0	0  1	Clock Speed    (RO)
+$0A		0	1	x	1	0  0	Int VBR MSB |  (WO)
+$0B		0	1	x	1	1  0	        LSB    (WO)
 ...
-$08		0	1	0	0	0	Int enables PIA
+$10		1	x	x	x	x  x	Int enables / timer VIA
 ...
-$0c		0	1	1	0	0	Int VBR MSB |
-$0d		0	1	1	0	1	        LSB |
-$10		1	0	0	0	0	Clock Speed
-$11		1	0	0	0	1	PSU controller
-
 
 UARTs: IO1SEL
 

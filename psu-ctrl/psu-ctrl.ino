@@ -29,21 +29,15 @@
  * computer.
  *
  * This handles the soft power button, and also implements software
- * reset and power-down control from the 6809 via an I/O port on one
- * of the system's 65C21s (the banked ROM PIA has port B free).
- *
- * - HOST_REQ_BIT0_PIN -> PB0
- * - HOST_REQ_BIT1_PIN -> PB1
- * - HOST_REQ_PIN -> CB2
- *
- * Port B on the 65C21 should be configured to pulse CB2 on writes to Port B.
+ * reset and power-down control from the 6809.
  *
  * 4 input pins are used:
  * - Power button (momentary on for power-on, hold for 3 seconds
- *   for power-off).
+ *   for power-off), triggered on the falling edge.
  * - A "host request" pin that notifies the microcontroller that
- *   the 6809 wants something.
- * - A 2-bit host request value.
+ *   the 6809 wants something, triggered on the rising edge.
+ * - A 2-bit host request value, held in a latch between the controller
+ *   and the 6809 data bus.
  *
  * 2 output pins are used:
  * - Drive #PSU_ON low on the ATX power supply.
@@ -121,7 +115,6 @@ state_name(int s)
 
 static volatile bool button_edge_detected;
 static volatile bool host_req_edge_detected;
-static volatile bool host_req_command_detected;
 
 static bool host_req_valid;
 static bool host_req_command;
@@ -273,8 +266,18 @@ sample_inputs(bool require_button_edge)
   bool button_edge = button_edge_detected;
   button_edge_detected = false;
 
+  /*
+   * The host request is held stable in a latch because
+   * it'll be gone from the 6809's data bus by the time
+   * we get to it.  We don't read the pins in the ISR
+   * since the propagation delay through the latch might
+   * mean the data isn't ready for us to sample in the
+   * ISR.
+   */
   host_req_valid = host_req_edge_detected;
-  host_req_command = host_req_command_detected;
+  host_req_command =
+      (digitalRead(HOST_REQ_BIT0_PIN) ? 0x01 : 0) |
+      (digitalRead(HOST_REQ_BIT1_PIN) ? 0x02 : 0);
   host_req_edge_detected = false;
   sei();
 
@@ -327,9 +330,6 @@ static void
 host_req_isr(void)
 {
   host_req_edge_detected = true;
-  host_req_command_detected =
-      (digitalRead(HOST_REQ_BIT0_PIN) ? 0x01 : 0) |
-      (digitalRead(HOST_REQ_BIT1_PIN) ? 0x02 : 0);
 }
 
 #if defined(SLEEP_MODE_PWR_SAVE)
@@ -467,7 +467,7 @@ state_recover(void)
   return state_ON;
 }
 
-#define VERSION "1.0"
+#define VERSION "1.1"
 
 void
 setup(void)
@@ -501,7 +501,7 @@ setup(void)
 
   Info("Initializing interrupts.");
   attachInterrupt(digitalPinToInterrupt(POWER_BUTTON_PIN), button_isr, FALLING);
-  attachInterrupt(digitalPinToInterrupt(HOST_REQ_PIN), host_req_isr, FALLING);
+  attachInterrupt(digitalPinToInterrupt(HOST_REQ_PIN), host_req_isr, RISING);
 
   /* power down a bunch of microcontroller blocks we don't need. */
   Info("Disabling unneeded functional blocks.");
