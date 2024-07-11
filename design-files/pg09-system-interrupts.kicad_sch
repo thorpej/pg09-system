@@ -1643,7 +1643,6 @@
     )
   )
 
-
   (junction (at 87.122 191.643) (diameter 0) (color 0 0 0 0)
     (uuid 0975f2f1-7f84-4b07-8df0-7af19a26f394)
   )
@@ -3388,10 +3387,10 @@
   (symbol (lib_id "jrt-ICs:W65C21") (at 46.609 53.721 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 11ece2ac-697b-4fc0-8cc5-d724a9257c6d)
-    (property "Reference" "U401" (at 48.5649 16.891 0)
+    (property "Reference" "U401" (at 48.5649 16.51 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "W65C21" (at 48.5649 19.431 0)
+    (property "Value" "W65C21S" (at 48.5649 19.05 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Footprint" "Package_DIP:DIP-40_W15.24mm_Socket" (at 44.069 52.451 0)
