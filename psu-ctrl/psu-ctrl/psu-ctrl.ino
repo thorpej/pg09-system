@@ -83,6 +83,19 @@
 #define RST_OUT_PIN         5   /* not a PWM pin */
 #define POWER_LED_PIN       4
 
+//
+// On an ATtiny85, the **physical** pins are thus:
+//
+// 1 /RESET out                 (RST_OUT_PIN)
+// 2 /PSU_ON out                (PSU_ON_PIN)
+// 3 POWERLED out (active-high) (POWER_LED_PIN)
+// 4 GND
+// 5 D0 in                      (HOST_REQ_BIT0_PIN)
+// 6 /CS in                     (HOST_REQ)
+// 7 /BUTTON in                 (POWER_BUTTON_PIN)
+// 8 Vcc
+//
+
 #else /* ! CONFIG_ATTINY */
 
 // Inputs
@@ -561,7 +574,7 @@ setup(void)
 
   Info("");
   Info(">>> 6809 Playground PSU controller " VERSION);
-  Info(">>> Copyright (c) 2023 Jason R. Thorpe");
+  Info(">>> Copyright (c) 2023, 2025 Jason R. Thorpe");
   Info("");
 
   Info("Initializing pins.");
