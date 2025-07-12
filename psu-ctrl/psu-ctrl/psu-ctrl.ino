@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2023 Jason R. Thorpe.
+ * Copyright (c) 2023, 2025 Jason R. Thorpe.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -55,16 +55,47 @@
 #include <avr/power.h>
 #include <avr/sleep.h>
 
-// #define CONFIG_ATTINY
+#define CONFIG_ATTINY
 #define DEBUG
 
+#ifdef CONFIG_ATTINY
+//
+// From:
+// https://github.com/damellis/attiny/blob/master/variants/tiny8/pins_arduino.h
+//
+// ATMEL ATTINY45/85 / ARDUINO
+//
+//                  +-\/-+
+// Ain0 (D 5) PB5  1|    |8  Vcc
+// Ain3 (D 3) PB3  2|    |7  PB2 (D 2)  Ain1
+// Ain2 (D 4) PB4  3|    |6  PB1 (D 1) pwm1
+//            GND  4|    |5  PB0 (D 0) pwm0
+//                  +----+
+//
+
+// Inputs
+#define POWER_BUTTON_PIN    2   /* uses interrupt */
+#define HOST_REQ_PIN        1   /* uses interrupt */
+#define HOST_REQ_BIT0_PIN   0
+
+// Outputs
+#define PSU_ON_PIN          3   /* not a PWM pin */
+#define RST_OUT_PIN         5   /* not a PWM pin */
+#define POWER_LED_PIN       4
+
+#else /* ! CONFIG_ATTINY */
+
+// Inputs
 #define POWER_BUTTON_PIN    2   /* uses interrupt */
 #define HOST_REQ_PIN        3   /* uses interrupt */
 #define HOST_REQ_BIT0_PIN   4
 #define HOST_REQ_BIT1_PIN   5
+
+// Outputs
 #define PSU_ON_PIN          8   /* not a PWM pin */
 #define RST_OUT_PIN         12  /* not a PWM pin */
 #define POWER_LED_PIN       LED_BUILTIN
+#endif /* CONFIG_ATTINY */
 
 /* Host commands. */
 #define HOST_REQ_POWEROFF   0
@@ -90,7 +121,7 @@
 #define STATE_ON_BUTTON_DOWN_LAST   STATE_ON_BUTTON_DOWN(BUTTON_DOWN_STATES - 1)
 #define STATE_POWER_OFF             (STATE_ON_BUTTON_DOWN_LAST + 1)
 
-#if !defined(CONFIG_ATTINY)
+#ifndef CONFIG_ATTINY
 static const char *
 state_name(int s)
 {
@@ -113,8 +144,10 @@ state_name(int s)
 }
 #endif /* ! CONFIG_ATTINY */
 
+#ifndef CONFIG_ATTINY
 static volatile bool button_edge_detected;
 static volatile bool host_req_edge_detected;
+#endif
 
 static bool host_req_valid;
 static bool host_req_command;
@@ -124,7 +157,7 @@ static int state;
 static void
 print_state(int s, bool brackets)
 {
-#if !defined(CONFIG_ATTINY)
+#ifndef CONFIG_ATTINY
   if (Serial && s != STATE_INITIAL) {
     if (brackets) {
       Serial.print("[");
@@ -143,7 +176,7 @@ print_current_state(void)
   print_state(state, true);
 }
 
-#if !defined(CONFIG_ATTINY)
+#ifndef CONFIG_ATTINY
 static void
 Info_internal(const char *str)
 {
@@ -263,6 +296,20 @@ sample_inputs(bool require_button_edge)
   int tick;
 
   cli();
+
+#ifdef CONFIG_ATTINY
+  /*
+   * On ATtiny, we can't detect a specific edge, on a
+   * specific pin, only that at least one of the pc-enalbed
+   * pins has changed.
+   *
+   * If we had edge-detection, we'd be latching on the
+   * rising edge.  But in this case, we just have to
+   * hope that any set-up time has been met on the data
+   * pins.
+   */
+  host_req_valid = digitalRead(HOST_REQ_PIN) == LOW;
+#else /* ! CONFIG_ATTINY */
   bool button_edge = button_edge_detected;
   button_edge_detected = false;
 
@@ -275,10 +322,16 @@ sample_inputs(bool require_button_edge)
    * ISR.
    */
   host_req_valid = host_req_edge_detected;
+  host_req_edge_detected = false;
+#endif /* CONFIG_ATTINY */
+
   host_req_command =
       (digitalRead(HOST_REQ_BIT0_PIN) ? 0x01 : 0) |
-      (digitalRead(HOST_REQ_BIT1_PIN) ? 0x02 : 0);
-  host_req_edge_detected = false;
+      (
+#if defined(HOST_REQ_BIT1_PIN)
+      digitalRead(HOST_REQ_BIT1_PIN) ? 0x02 :
+#endif
+                                               0);
   sei();
 
   power_button = 0;
@@ -291,9 +344,11 @@ sample_inputs(bool require_button_edge)
   if (power_button < INPUT_DEBOUNCE_THRESH) {
     power_button = 0;
   }
+#if !defined(CONFIG_ATTINY)
   if (require_button_edge && ! button_edge) {
     power_button = 0;
   }
+#endif
   return power_button || host_req_valid;
 }
 
@@ -313,6 +368,22 @@ reset_system(void)
   set_rst_out(false);
 }
 
+#if defined(CONFIG_ATTINY)
+/*
+ * The ATtiny's pin change interrupts are limited
+ * compared to the ATmega.  We have to do a little
+ * extra work in software.
+ */
+ISR(PCINT0_vect)
+{
+  /*
+   * We're now awake and disable pin-change interrupts
+   * until we go back to sleep.
+   */
+  GIFR |= bit(PCIF);
+  GIMSK &= ~bit(PCIE);
+}
+#else /* ! CONFIG_ATTINY */
 /*
  * button_isr / host_req_isr --
  *
@@ -331,6 +402,7 @@ host_req_isr(void)
 {
   host_req_edge_detected = true;
 }
+#endif /* CONFIG_ATTINY */
 
 #if defined(SLEEP_MODE_PWR_SAVE)
 #define SNOOZE_MODE       SLEEP_MODE_PWR_SAVE
@@ -350,7 +422,18 @@ snooze(void)
 {
   set_sleep_mode(SNOOZE_MODE);
   cli();
-  if (! (button_edge_detected || host_req_edge_detected)) {
+#if defined(CONFIG_ATTINY)
+  bool have_input = digitalRead(POWER_BUTTON_PIN) == LOW ||
+                    digitalRead(HOST_REQ_PIN) == LOW;
+#else
+  bool have_input = button_edge_detected || host_req_edge_detected;
+#endif /* CONFIG_ATTINY */
+  if (! have_input) {
+#if defined(CONFIG_ATTINY)
+    /* Re-enable pin change interrupts. */
+    GIFR |= bit(PCIF);
+    GIMSK &= ~bit(PCIE);
+#endif
     sleep_enable();
     sei();
     sleep_cpu();
@@ -467,7 +550,7 @@ state_recover(void)
   return state_ON;
 }
 
-#define VERSION "1.1"
+#define VERSION "1.2"
 
 void
 setup(void)
@@ -486,7 +569,9 @@ setup(void)
   pinMode(POWER_BUTTON_PIN, INPUT_PULLUP);
   pinMode(HOST_REQ_PIN, INPUT_PULLUP);
   pinMode(HOST_REQ_BIT0_PIN, INPUT_PULLUP);
+#if defined(HOST_REQ_BIT1_PIN)
   pinMode(HOST_REQ_BIT1_PIN, INPUT_PULLUP);
+#endif
 
   /*
    * Output pins. Inputs until we drive them.  They
@@ -500,8 +585,22 @@ setup(void)
   pinMode(POWER_LED_PIN, OUTPUT);
 
   Info("Initializing interrupts.");
+  cli();
+#if defined(CONFIG_ATTINY)
+  PCMSK = bit(POWER_BUTTON_PIN) | bit(HOST_REQ_PIN);
+  GIFR |= bit(PCIF);
+  GIMSK |= bit(PCIE);
+#else
+  /*
+   * Falling-edge of power button because that's just a human.
+   * Rising-edge of host-req pin because we're latching a value
+   * That's been placed on the data bus and the host-req pin is
+   * connected to the write-strobe output from the CPU.
+   */
   attachInterrupt(digitalPinToInterrupt(POWER_BUTTON_PIN), button_isr, FALLING);
   attachInterrupt(digitalPinToInterrupt(HOST_REQ_PIN), host_req_isr, RISING);
+#endif
+  sei();
 
   /* power down a bunch of microcontroller blocks we don't need. */
   Info("Disabling unneeded functional blocks.");
