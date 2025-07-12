@@ -55,7 +55,7 @@
 #include <avr/power.h>
 #include <avr/sleep.h>
 
-#define CONFIG_ATTINY
+//#define CONFIG_ATTINY
 #define DEBUG
 
 #ifdef CONFIG_ATTINY
